@@ -1,0 +1,74 @@
+<div mat-dialog-title>
+  <h1>{{ data ? "Modifier la " : "Ajouter une " }}cour</h1>
+</div>
+<form [formGroup]="coursForm" (ngSubmit)="onFormSubmit()">
+  <div mat-dialog-content class="content">
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Matiere</mat-label>
+        <select matNativeControl name="matiere" formControlName="matiere">
+          <option *ngFor="let matiere of matieres" value="{{ matiere._id }}">
+            {{ matiere.name }}
+          </option>
+        </select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Date</mat-label>
+        <input matInput [matDatepicker]="date" formControlName="date" />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="date"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #date></mat-datepicker>
+      </mat-form-field>
+
+      <div class="type">
+        <mat-form-field appearance="outline" class="fill">
+          <mat-label>Temp</mat-label>
+          <select matNativeControl name="startTime" formControlName="startTime">
+            <option *ngFor="let itm of debit_cours" [ngValue]="itm.value">
+              {{ itm.date }}
+            </option>
+          </select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="fill">
+          <mat-label>type</mat-label>
+          <select matNativeControl name="type" formControlName="type">
+            <option value="CM">CM</option>
+            <option value="TD">TD</option>
+            <option value="TP">TP</option>
+          </select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="fill">
+          <mat-label>nbh</mat-label>
+          <input
+            name="nbh"
+            type="number"
+            matInput
+            formControlName="nbh"
+            placeholder="nbh nb d`heures"
+          />
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions class="action">
+    <button
+      mat-raised-button
+      class="mat-radio-button"
+      type="button"
+      [mat-dialog-close]="false"
+    >
+      Cancel
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      class="mat-radio-button"
+      type="submit"
+    >
+      {{ data ? "Update" : "Save" }}
+    </button>
+  </div>
+</form>

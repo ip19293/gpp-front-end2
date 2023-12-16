@@ -1,0 +1,134 @@
+<div class="card">
+  <div class="card-body">
+    <div class="card-head">
+      <h1 class="display-4">
+        {{ filliere | uppercase }} : S{{ semestre }}&nbsp;&nbsp;{{ annee }} -
+        Emploi du Temps (G{{ group }})
+      </h1>
+    </div>
+    <div class="head-content-left">
+      <div class="search-container mt-3 mb-3">
+        <div class="normal-search">
+          <input
+            matInput
+            (keyup)="applyFilter($event)"
+            #input
+            type="search"
+            class="search"
+            placeholder="Recherche..."
+          />
+          <mat-icon class="search-icon">search</mat-icon>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        matSort
+        class="table table-bordered"
+      >
+        <!-- jour Column -->
+        <ng-container matColumnDef="jour">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Jour</th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.day }}
+          </td>
+        </ng-container>
+
+        <!-- startTime Column -->
+        <ng-container matColumnDef="startTime">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Debit</th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.startTime }}
+          </td>
+        </ng-container>
+
+        <!-- finishTime Column -->
+        <ng-container matColumnDef="finishTime">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Fin</th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.finishTime }}
+          </td>
+        </ng-container>
+        <!-- professeur Column -->
+        <ng-container matColumnDef="professeur">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Enseignant</th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.professeur }}
+          </td>
+        </ng-container>
+        <!-- matiere Column -->
+        <ng-container matColumnDef="matiere">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Element de module
+          </th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.matiere }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            &nbsp;&nbsp; Action
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <button
+              mat-icon-button
+              color="primary"
+              (click)="openEditEmploiComp(row)"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              color="warn"
+              (click)="removeEmploi($event, row.id)"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+        <!-- Row shown when there is no matching data. -->
+        <tr class="mat-row border" *matNoDataRow>
+          <td class="mat-cell" colspan="4">
+            No data matching the filter "{{ input.value }}"
+          </td>
+        </tr>
+      </table>
+
+      <mat-paginator
+        [pageSizeOptions]="[5, 10, 25, 100]"
+        aria-label="Sélectionnez la page des utilisateurs"
+      ></mat-paginator>
+    </div>
+    <div class="row flex-row justify-content-end">
+      <button
+        mat-button
+        color="primary"
+        style="width: 30vh; border: 2px solid whitesmoke"
+        (click)="openAddEmploiComp()"
+      >
+        <mat-icon>add</mat-icon>
+        Nouvele emploi
+      </button>
+    </div>
+  </div>
+</div>
+
+<!--  <div class="row row-flex justify-content-end align-items-center w-100">
+    <div class="col-2">
+      <button
+        (click)="openAddUserComp()"
+        class="btn btn-outline-secondary ml-auto"
+      >
+        <fa-icon class="fa-close" [icon]="faPlus"></fa-icon>Noveau ulilisateur
+      </button>
+    </div>
+  </div>
+</div> -->

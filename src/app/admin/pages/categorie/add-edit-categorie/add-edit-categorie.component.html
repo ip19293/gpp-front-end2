@@ -1,0 +1,41 @@
+<div mat-dialog-title>
+  <h1 class="display-4">
+    {{ data ? "Modifier la" : "Ajouter une" }} catégorie
+  </h1>
+</div>
+<form [formGroup]="categorieForm" (ngSubmit)="onFormSubmit()">
+  <div mat-dialog-content class="">
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Nom</mat-label>
+        <input type="text" matInput formControlName="name" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+        <input type="text" matInput formControlName="description" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Taux horeurs</mat-label>
+        <input type="number" matInput formControlName="prix" />
+      </mat-form-field>
+    </div>
+  </div>
+  <div mat-dialog-actions class="action">
+    <button
+      mat-raised-button
+      class="mat-radio-button"
+      type="button"
+      [mat-dialog-close]="false"
+    >
+      Cancel
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      class="mat-radio-button"
+      type="submit"
+    >
+      {{ data ? "Update" : "Save" }}
+    </button>
+  </div>
+</form>

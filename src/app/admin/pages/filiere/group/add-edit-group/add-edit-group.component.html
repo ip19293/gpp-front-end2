@@ -1,0 +1,46 @@
+<div mat-dialog-title>
+  <h1 class="">{{ niveau }}&nbsp;{{ filliere }}</h1>
+  <h2>{{ data ? "Modifier le " : "Ajouter un " }}groupe</h2>
+</div>
+<form [formGroup]="groupForm" (ngSubmit)="onFormSubmit()">
+  <div mat-dialog-content class="content">
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Groupe</mat-label>
+        <select matNativeControl name="name" formControlName="name">
+          <option value="A" selected>A</option>
+          <option value="B">B</option>
+          <option value="C">C</option>
+          <option value="D">D</option>
+          <option value="E">E</option>
+        </select>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Semestre</mat-label>
+        <select matNativeControl name="semestre" formControlName="semestre">
+          <option *ngFor="let semestre of semestres" value="{{ semestre._id }}">
+            {{ semestre.numero }}
+          </option>
+        </select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div mat-dialog-actions class="action">
+    <button
+      mat-raised-button
+      class="mat-radio-button"
+      type="button"
+      [mat-dialog-close]="false"
+    >
+      Cancel
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      class="mat-radio-button"
+      type="submit"
+    >
+      {{ data ? "Update" : "Save" }}
+    </button>
+  </div>
+</form>

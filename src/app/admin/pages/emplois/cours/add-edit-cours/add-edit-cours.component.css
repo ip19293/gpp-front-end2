@@ -1,0 +1,8 @@
+.type {
+  display: flex;
+  flex-direction: row;
+  .fill {
+    width: 30%;
+    margin: 5px;
+  }
+}

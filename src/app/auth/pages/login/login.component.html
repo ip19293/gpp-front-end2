@@ -1,0 +1,100 @@
+<!------------------------------------------  Main container ---------------------------- -->
+<div
+  class="container d-flex justify-content-center align-items-center min-vh-100"
+>
+  <!------------------------------------------  logo container ---------------------------- -->
+  <div class="row border rounder-5 p-3 bg-white shadow box-area">
+    <!------------------------------------------  left box ---------------------------- -->
+    <div
+      class="col-md-6 rounder-4 d-flex justify-content-center align-items-center flex-column left-box"
+      style="background-color: #103cbe"
+    >
+      <div class="featured-image mb-3">
+        <img
+          src="assets/images/supnum.png"
+          alt=""
+          class="img-fluid"
+          style="width: 250px"
+        />
+        <p
+          class="text-white f-s-2"
+          style="
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: 600;
+          "
+        >
+          Etre Vérifié
+        </p>
+        <small
+          class="text-white text-wrap text-center"
+          style="width: 17rem; font-family: 'Courier New', Courier, monospace"
+          >Rejoignez des designers expérimentés sur cette plateforme</small
+        >
+      </div>
+    </div>
+    <!------------------------------------------  right box ---------------------------- -->
+    <div class="col-md-6 right-box">
+      <div class="row align-items-center">
+        <div class="header-text mb-4">
+          <h2>Bonjour,Encore</h2>
+          <p>Nous sommes heureux de vous avoir de retour</p>
+        </div>
+        <form [formGroup]="loginForm" (ngSubmit)="login()">
+          <div class="input-group mb-3">
+            <input
+              class="form-control form-control-lg bg-light fs-6"
+              placeholder="Adresse e-mail"
+              type="email"
+              formControlName="email"
+              [ngClass]="{
+                'is-invalid': isSubmit && loginForm.controls['email'].errors
+              }"
+            />
+          </div>
+
+          <div class="input-group mb-1">
+            <input
+              class="form-control form-control-lg bg-light fs-6"
+              placeholder="Mot de passe"
+              type="password"
+              formControlName="password"
+              [ngClass]="{
+                'is-invalid': isSubmit && loginForm.controls['password'].errors
+              }"
+            />
+          </div>
+          <div class="input-group mb-5 d-flex justify-content-between">
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" />
+              <label for="formCheck" class="form-check-label text-secondary"
+                ><small>Souviens-toi de moi</small></label
+              >
+            </div>
+            <div class="forget">
+              <small><a href="#">Mot de passe oublié?</a></small>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <button class="btn btn-lg btn-primary w-100 fs-6" type="submit">
+              Se connecter
+            </button>
+          </div>
+          <div class="input-group mb-3">
+            <button class="btn btn-lg btn-light w-100 fs-6">
+              <img src="" style="width: 20px" /><small
+                >Se connecter avec Google</small
+              >
+            </button>
+          </div>
+          <div class="row">
+            <small
+              >Vous n'avez pas de compte?
+              <a href="#" routerLink="../signup">Inscrivez-vous</a></small
+            >
+          </div>
+        </form>
+      </div>
+    </div>
+    <!------------------------------------------  Main container ---------------------------- -->
+  </div>
+</div>
