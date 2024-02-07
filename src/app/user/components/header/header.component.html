@@ -1,0 +1,27 @@
+<div class="flex gap-4">
+  <div class="demo-section flex gap-4">
+    <a
+      [routerLinkActive]="'true'"
+      class="menu-top-item"
+      mat-button
+      *ngFor="let item of menuTopItems"
+      routerLink="{{ item.routerLink }}"
+      ><mat-icon
+        matBadge="{{ item.nbE }}"
+        matBadgeColor="primary"
+        [fontSet]="true ? 'material-icons-outlined' : 'material-icons'"
+        >{{ item.icon }}
+      </mat-icon></a
+    >
+
+    <span class="cdk-visually-hidden"> </span>
+  </div>
+  <div>
+    <a mat-button [matMenuTriggerFor]="menu"><mat-icon>settings</mat-icon></a>
+
+    <mat-menu #menu="matMenu">
+      <a mat-menu-item><mat-icon>person</mat-icon> Profile</a>
+      <a mat-menu-item><mat-icon>logout</mat-icon> Logout</a>
+    </mat-menu>
+  </div>
+</div>

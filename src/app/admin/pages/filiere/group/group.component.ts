@@ -16,7 +16,7 @@ import { DialogService } from 'src/app/admin/services/dialog.service';
 })
 export class GroupComponent implements OnInit {
   id: any;
-  displayedColumns: string[] = ['niveau', 'semestre', 'group', 'action'];
+  displayedColumns: string[] = ['group', 'semestre', 'type', 'action'];
 
   filliere: any;
   niveau: any;
@@ -42,6 +42,7 @@ export class GroupComponent implements OnInit {
       console.log(res.id);
     });
     localStorage.setItem('filliere', this.id);
+    this.getAllGroupsByFilliereId();
   }
   ngOnInit(): void {
     this.getAllGroupsByFilliereId();
@@ -57,16 +58,17 @@ export class GroupComponent implements OnInit {
       this.semestres = res.list_semestres;
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
+      this.paginator._intl.itemsPerPageLabel = "Nombre d'eléments par page";
       //console.warn(this.users.email);
     });
   }
   removeGroupById(event: any, id: string) {
     this.dialog
       .confirmDialog({
-        title: 'Are you sure',
-        message: 'are you sure you wont to delete this group ?',
-        confirmText: 'Yes',
-        cancelText: 'No',
+        title: 'Cette action est irréversible !',
+        message: 'Etes-vous sùr de vouloir suprimer le groupe?',
+        confirmText: 'Oui',
+        cancelText: 'Annuler',
       })
       .subscribe({
         next: (res: any) => {

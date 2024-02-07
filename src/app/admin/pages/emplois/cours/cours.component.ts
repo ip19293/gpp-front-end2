@@ -20,10 +20,10 @@ export class CoursComponent implements OnInit {
   displayedColumns: string[] = [
     'matiere',
     'professeur',
-    'startDate',
-    'startTime',
+    'date',
     'type',
-    'finishTime',
+    'debit',
+    'fin',
     'isSigned',
     'action',
   ];
@@ -44,30 +44,25 @@ export class CoursComponent implements OnInit {
   ) {
     this.getCours();
   }
-  ngOnInit(): void {
-    this.getCours();
-  }
+  ngOnInit(): void {}
 
   getCours() {
-    this.service.getAllCours().subscribe({
-      next: (res: any) => {
-        this.cours = res.cours;
-        this.dataSource = new MatTableDataSource(res.cours);
-        this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
-      },
-      error: (err) => {
-        this.toastr.error(`${err.message}`, `failed`);
-      },
+    this.service.getAllCours().subscribe((res) => {
+      this.cours = res.cours;
+      this.dataSource = new MatTableDataSource(res.cours);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+      this.paginator._intl.itemsPerPageLabel = "Nombre d'eléments par page";
     });
   }
+
   deleteCours(event: any, id: string) {
     this.dialog
       .confirmDialog({
-        title: 'Are you sure',
-        message: 'are you sure you wont to delete this cours ?',
-        confirmText: 'Yes',
-        cancelText: 'No',
+        title: 'Cette action est irréversible !',
+        message: `Etes-vous sùr de vouloir suprimer la cour ?`,
+        confirmText: 'Oui',
+        cancelText: 'Annuler',
       })
       .subscribe({
         next: (res: any) => {
@@ -114,7 +109,7 @@ export class CoursComponent implements OnInit {
     this.service.signeCours(id).subscribe({
       next: (res: any) => {
         this.getCours();
-        this.toastr.success(`cours is signe`, `${res.status}`);
+        this.toastr.success(`${res.message}`, `${res.status}`);
       },
       error: (err: any) => {
         this.toastr.error(``, `${err.error.message}`);

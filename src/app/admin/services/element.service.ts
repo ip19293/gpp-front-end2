@@ -19,10 +19,19 @@ export class ElementService {
     });
   }
   addElement(data: any): Observable<any> {
-    return this.http.post(this.URL_F, data);
+    return this.http.post(this.URL_F, data, {
+      headers: this._headers,
+    });
+  }
+  uploadElements(id: string, data: any): Observable<any> {
+    return this.http.post(this.URL_F + `/upload/${id}`, data, {
+      headers: this._headers,
+    });
   }
   getElementById(id: string): Observable<any> {
-    return this.http.get(this.URL_F + `/${id}`);
+    return this.http.get(this.URL_F + `/${id}`, {
+      headers: this._headers,
+    });
   }
   getElementsBySemestre(semestre: string): Observable<any> {
     return this.http.get(this.URL_F + `/semestre/${semestre}`, {
@@ -41,6 +50,11 @@ export class ElementService {
   }
   updateElement(id: string, data: any): Observable<any> {
     return this.http.patch(this.URL_F + `/${id}`, data, {
+      headers: this._headers,
+    });
+  }
+  getGroupsByElementId(id: string): Observable<any> {
+    return this.http.get(this.URL_F + `/${id}/groups`, {
       headers: this._headers,
     });
   }

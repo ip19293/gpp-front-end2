@@ -20,7 +20,6 @@ export class ProfCoursComponent implements OnInit {
     'date',
     'matiere',
     'type',
-    'TH',
     'debit',
     'fin',
     'isSigne',
@@ -32,6 +31,7 @@ export class ProfCoursComponent implements OnInit {
   id: any;
   professeur: any;
   nomComplet: any;
+  nom: any;
   prenom: any;
   email: any;
   coursNon = [];
@@ -65,7 +65,7 @@ export class ProfCoursComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
       this.allsigne = '';
       this.isSigned = false;
-
+      this.paginator._intl.itemsPerPageLabel = "Nombre d'eléments par page";
       //console.warn(this.professeur.nom);
     });
   }
@@ -84,20 +84,19 @@ export class ProfCoursComponent implements OnInit {
   getProfesseurById() {
     this.service.getProfesseur(this.id).subscribe((res) => {
       this.professeur = res.professeur;
-      this.nomComplet = res.professeur.nomComplet;
+      this.nom = res.professeur.nom;
+      this.prenom = res.professeur.prenom;
       this.email = res.professeur.email;
-      console.warn(this.professeur.nomComplet);
     });
   }
 
   deleteCours(event: any, id: string) {
     this.dialog
       .confirmDialog({
-        title: 'Are you sure',
-        message:
-          'are you sure you wont to delete this cours from list of this professeur ?',
-        confirmText: 'Yes',
-        cancelText: 'No',
+        title: 'Cette action est irréversible !',
+        message: `Etes-vous sùr de vouloir suprimer la cour ?`,
+        confirmText: 'Oui',
+        cancelText: 'Annuler',
       })
       .subscribe({
         next: (res: any) => {
@@ -144,7 +143,7 @@ export class ProfCoursComponent implements OnInit {
     this.service_cours.signeCours(id).subscribe({
       next: (res: any) => {
         this.getProfesseurCours();
-        this.toastr.success(`cours is signe`, `${res.status}`);
+        this.toastr.success(`${res.message}`, `${res.status}`);
       },
       error: (err: any) => {
         this.toastr.error(``, `${err.error.message}`);

@@ -1,3 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.content {
+  padding-top: 20px;
+}
 .mat-radio-button ~ .mat-radio-button {
   margin-left: 16px;
 }
@@ -11,13 +18,18 @@
 .type {
   display: flex;
   flex-direction: row;
-  .fill {
-    width: 50%;
-    margin: 5px;
+  width: 100%;
+
+  .not-fill {
+    width: 30%;
   }
 }
-.categorie {
+.row {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
+  width: 100%;
+  .fill {
+    width: 100%;
+  }
 }

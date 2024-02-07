@@ -1,0 +1,26 @@
+<mat-drawer-container autosize class="example-container">
+  <mat-drawer mode="side" opened>
+    <div class="sidnav-header">
+      <img width="100" height="100" src="assets/flag/user.jpg" />
+      <div class="header-text">
+        <h2>Your chanel</h2>
+        <p>Your chanel</p>
+      </div>
+    </div>
+    <mat-nav-list>
+      <mat-list-item>
+        <button mat-button><mat-icon>dashboard</mat-icon>Dashbord</button>
+      </mat-list-item>
+      <mat-list-item>
+        <button mat-button><mat-icon>settings</mat-icon>Dashbord</button>
+      </mat-list-item>
+      <mat-list-item>
+        <button mat-button><mat-icon>help</mat-icon>Help</button>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-drawer>
+  <mat-drawer-content>
+    <div style="text-align: center"></div>
+    <router-outlet></router-outlet>
+  </mat-drawer-content>
+</mat-drawer-container>

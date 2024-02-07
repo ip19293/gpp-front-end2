@@ -18,6 +18,16 @@ export class UserService {
       headers: this._headers,
     });
   }
+  getUserById(id: any): Observable<any> {
+    return this.http.get<any>(`http://localhost:5000/user/${id}`, {
+      headers: this._headers,
+    });
+  }
+  getProfesseur(id: any): Observable<any> {
+    return this.http.get<any>(`http://localhost:5000/user/${id}/professeur`, {
+      headers: this._headers,
+    });
+  }
 
   addUser(data: any): Observable<any> {
     return this.http.post('http://localhost:5000/user', data);

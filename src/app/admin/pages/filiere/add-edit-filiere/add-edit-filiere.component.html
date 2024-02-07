@@ -1,11 +1,11 @@
-<div mat-dialog-title>
+<div mat-dialog-title class="border-b">
   <h1>{{ data ? "Modifier la " : "Ajouter une " }}filière</h1>
 </div>
 <form [formGroup]="filliereForm" (ngSubmit)="onFormSubmit()">
   <div mat-dialog-content class="content">
-    <div class="row">
-      <mat-form-field appearance="outline">
-        <mat-label>Name</mat-label>
+    <div class="row border-1 rounded-md py-2 px-6">
+      <mat-form-field appearance="outline" class="mt-4">
+        <mat-label>Nom</mat-label>
         <input name="name" type="text" matInput formControlName="name" />
       </mat-form-field>
       <mat-form-field appearance="outline">
@@ -29,20 +29,18 @@
   </div>
   <div mat-dialog-actions class="action">
     <button
-      mat-raised-button
-      class="mat-radio-button"
+      mat-stroked-button
+      class="px-3"
       type="button"
+      color="warn"
       [mat-dialog-close]="false"
     >
-      Cancel
+      Annuler
+      <mat-icon>close</mat-icon>
     </button>
-    <button
-      mat-raised-button
-      color="primary"
-      class="mat-radio-button"
-      type="submit"
-    >
-      {{ data ? "Update" : "Save" }}
+    <button mat-stroked-button color="primary" class="px-3" type="submit">
+      {{ data ? "Modifier" : "Enregistrer" }}
+      <mat-icon>checked</mat-icon>
     </button>
   </div>
 </form>

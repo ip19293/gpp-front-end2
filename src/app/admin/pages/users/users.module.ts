@@ -28,6 +28,8 @@ import { ProfCoursAddEditComponent } from './professeur/prof-cours-add-edit/prof
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { CdkMenuModule } from '@angular/cdk/menu';
+import { AddUserComponent } from './add-user/add-user.component';
+import { NewUserComponent } from './new-user/new-user.component';
 @NgModule({
   declarations: [
     UsersComponent,
@@ -39,6 +41,8 @@ import { CdkMenuModule } from '@angular/cdk/menu';
     ProfMatiereAddEditComponent,
     ProfCoursComponent,
     ProfCoursAddEditComponent,
+    AddUserComponent,
+    NewUserComponent,
   ],
   imports: [
     CommonModule,

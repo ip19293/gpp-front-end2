@@ -7,9 +7,12 @@ import { GroupComponent } from './group/group.component';
 import { AddEditSemestreComponent } from './semestre/add-edit-semestre/add-edit-semestre.component';
 import { AddEditGroupComponent } from './group/add-edit-group/add-edit-group.component';
 import { EmploisComponent } from './group/emplois/emplois.component';
+import { ElementComponent } from './semestre/element/element.component';
+import { FiliereDetailComponent } from './filiere-detail/filiere-detail.component';
 
 const routes: Routes = [
   { path: 'filieres', component: FiliereComponent },
+  { path: 'filieres/:id', component: FiliereDetailComponent },
   { path: 'filieres/:id/semestres', component: SemestreComponent },
   { path: 'filieres/:id/groupes', component: GroupComponent },
   { path: 'filieres/add-edit', component: AddEditFiliereComponent },
@@ -24,6 +27,10 @@ const routes: Routes = [
   {
     path: 'filieres/:id/groupes/:idS/:idG',
     component: EmploisComponent,
+  },
+  {
+    path: 'filieres/:id/semestres/:idS/elements',
+    component: ElementComponent,
   },
 ];
 

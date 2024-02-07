@@ -1,5 +1,10 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  AsyncPipe,
+  CommonModule,
+  NgSwitch,
+  NgSwitchCase,
+} from '@angular/common';
 import { LoginComponent } from './pages/login/login.component';
 import { SignupComponent } from './pages/signup/signup.component';
 import { ChangePasswordComponent } from './pages/change-password/change-password.component';
@@ -15,6 +20,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatRadioModule } from '@angular/material/radio';
+import { ForgetPasswordComponent } from './pages/forget-password/forget-password.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +34,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     ChangePasswordComponent,
     BodyComponent,
     NavbarComponent,
+    ForgetPasswordComponent,
   ],
   imports: [
     CommonModule,
@@ -37,7 +48,13 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatIconModule,
     MatCardModule,
     AuthRoutingModule,
-    
+    MatSelectModule,
+    NgSwitch,
+    NgSwitchCase,
+    MatFormFieldModule,
+    MatCheckboxModule,
+    AsyncPipe,
+    MatRadioModule,
   ],
 })
 export class AuthModule {}

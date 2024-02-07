@@ -5,13 +5,12 @@
   <div mat-dialog-content class="content">
     <div class="row">
       <mat-form-field appearance="outline">
-        <mat-label>Nom & prenom</mat-label>
-        <input
-          name="nomComplet"
-          type="text"
-          matInput
-          formControlName="nomComplet"
-        />
+        <mat-label>Nom</mat-label>
+        <input name="nom" type="text" matInput formControlName="nom" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Prenom</mat-label>
+        <input name="prenom" type="text" matInput formControlName="prenom" />
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Numero de compte</mat-label>

@@ -8,17 +8,29 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { DialogService } from 'src/app/admin/services/dialog.service';
 import { ProfesseurService } from 'src/app/admin/services/professeur.service';
-
+import {
+  faClose,
+  faAngleDown,
+  faCloudUpload,
+  faFileExcel,
+  faMeh,
+} from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-professeur',
   templateUrl: './professeur.component.html',
   styleUrls: ['./professeur.component.css'],
 })
 export class ProfesseurComponent implements OnInit {
+  faFileExcel = faFileExcel;
+  faCloudUpload = faCloudUpload;
+  faMeh = faMeh;
+  fileIsSelected = false;
+  selectedFileName = null;
+  file: any;
   displayedColumns: string[] = [
     'nom',
     'email',
-    'mobile',
+    /*  'mobile', */
     'banque',
     'account',
     'action',
@@ -40,6 +52,42 @@ export class ProfesseurComponent implements OnInit {
     this.checkCanShawSearchAsOverlay(window.innerWidth);
     this.getProfesseurs();
   }
+  uploads(event: any) {
+    const file = event.currentTarget.files[0];
+    const file_name = file.name;
+    const file_type = file.type;
+    const file_size = file.size;
+    this.selectedFileName = file_name;
+    if (
+      file_type ==
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    ) {
+      this.fileIsSelected = true;
+      this.file = file;
+    } else {
+      this.toastr.error(
+        `Le type de fichier sélectionné doit ètre xlsx`,
+        'échec'
+      );
+    }
+    // debugger;
+  }
+  onFormSubmit() {
+    const formdata = new FormData();
+    formdata.append('file', this.file);
+    this.service.uploadProfesseurs(formdata).subscribe({
+      next: (res) => {
+        this.toastr.success(`${res.message}`, `${res.status}`);
+        this.fileIsSelected = false;
+        this.file = null;
+        this.selectedFileName = null;
+        this.getProfesseurs();
+      },
+      error: (err) => {
+        this.toastr.error(`${err.error.message}`, 'failed');
+      },
+    });
+  }
   canShawSearchAsOverlay = false;
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
@@ -57,6 +105,7 @@ export class ProfesseurComponent implements OnInit {
       this.dataSource = new MatTableDataSource(res.professeurs);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
+      this.paginator._intl.itemsPerPageLabel = "Nombre d'eléments par page";
       //console.warn(this.users.email);
     });
   }
@@ -64,10 +113,10 @@ export class ProfesseurComponent implements OnInit {
   deleteProfesseur(event: any, id: string) {
     this.dialog
       .confirmDialog({
-        title: 'Are you sure',
-        message: 'are you sure you wont to delete this professeur ?',
-        confirmText: 'Yes',
-        cancelText: 'No',
+        title: 'Cette action est irréversible !',
+        message: `Etes-vous sùr de vouloir suprimer l'enseignant(e) ?`,
+        confirmText: 'Oui',
+        cancelText: 'Annuler',
       })
       .subscribe({
         next: (res: any) => {

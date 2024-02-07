@@ -1,72 +1,188 @@
 <div class="card">
-  <div class="card-head">
-    <h1 class="display-4">
-      {{ nomComplet | uppercase }} - Les cotisations des enseignants
-    </h1>
-    <!-- --------------------------------------------------------------------------------------------- -->
-    <div class="row pt-1 bg-white">
-      <div class="col-md-6 left-box">
-        <div class="row align-items-center">
-          <div class="container w-full from-whitesmoke-800 to-whitesmoke-600">
-            <div class="row">
-              <div class="col-sm-6 col-md-5 col-lg-5 mb-3">
-                <div class="card">
-                  <div class="cord-body bg-gradient-to-b">
-                    <h5 class="card-title">Les résultats</h5>
-                    <p class="card-text">{{ nbc }}{{ count }}</p>
-                    <p class="card-text">{{ nbh }} {{ heuresTV }}</p>
-                    <p class="card-text">{{ ts }} {{ somme }}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+  <div class="card-header">
+    <mat-card-title
+      class="lg:text-2xl font-extrabold font-mono md:text-sm text-transform: capitalize"
+      >{{ nom }} {{ prenom }} - Cotisations</mat-card-title
+    >
+  </div>
+  <div class="card-body">
+    <mat-card>
+      <mat-card-header class="flex flex-col w-full" *ngIf="cours.length != 0">
+        <div class="card-body-top flex justify-between px-5 py-3">
+          <mat-card-title
+            class="lg:text-2xl font-extrabold font-mono md:text-sm text-transform: capitalize"
+            >Depuis : {{ fromDate | date }}
 
-      <div class="col-md-6 right-box">
-        <form [formGroup]="intervalForm" (ngSubmit)="onFormSubmit()">
-          <div class="row d-flex">
-            <div class="input-group mb-3">
-              <button class="btn btn-lg btn-success fs-6" type="submit">
-                Les résultats de la période
+            jusqua :
+            {{ toDate | date }}</mat-card-title
+          >
+
+          <a
+            [cdkMenuTriggerFor]="menu"
+            class="example-standalone-trigger"
+            mat-icon-button
+            class="hover:bg-white hover:text-green-500"
+          >
+            <mat-icon class="sidenav-link-icon">more_horiz</mat-icon>
+          </a>
+          <ng-template #menu>
+            <div class="example-menu" cdkMenu>
+              <button
+                class="example-menu-item"
+                cdkMenuItem
+                (click)="openDialog()"
+              >
+                Changer la période
+              </button>
+              <button
+                class="example-menu-item"
+                cdkMenuItem
+                (click)="savePaiement()"
+              >
+                Ajouter la facture de paiement
               </button>
             </div>
-            <div class="col-md-6">
-              <mat-form-field appearance="outline">
-                <mat-label>{{
-                  from ? "Depuis le " + (from | date) : ""
-                }}</mat-label>
-                <input
-                  matInput
-                  [matDatepicker]="debit"
-                  formControlName="debit"
-                />
-                <mat-datepicker-toggle
-                  matIconSuffix
-                  [for]="debit"
-                ></mat-datepicker-toggle>
-                <mat-datepicker #debit></mat-datepicker>
-              </mat-form-field>
-            </div>
-            <div class="col-md-6">
-              <mat-form-field appearance="outline">
-                <mat-label>{{ to ? "Jusqu'au " + (to | date) : "" }}</mat-label>
-                <input matInput [matDatepicker]="fin" formControlName="fin" />
+          </ng-template>
+        </div>
 
-                <mat-datepicker-toggle
-                  matIconSuffix
-                  [for]="fin"
-                ></mat-datepicker-toggle>
-                <mat-datepicker #fin></mat-datepicker>
-              </mat-form-field>
-            </div>
-          </div>
-        </form>
+        <mat-card-subtitle> </mat-card-subtitle>
+      </mat-card-header>
+      <div class="table mt-3 px-3">
+        <table
+          mat-table
+          [dataSource]="dataSrs"
+          matSort
+          class="table table-bordered"
+        >
+          <!--  nbc Column -->
+          <ng-container matColumnDef="nbc" class="truncate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Nombre de cours
+            </th>
+            <td mat-cell *matCellDef="let row">
+              {{ row.nbc }}
+            </td>
+          </ng-container>
+          <!--     Montant(MRU) -->
+          <ng-container matColumnDef="montant" class="truncate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Montant(UM)
+            </th>
+            <td mat-cell *matCellDef="let row">
+              {{ row.somme }}
+            </td>
+          </ng-container>
+          <!--     prix(MRU) -->
+          <ng-container matColumnDef="prix" class="truncate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Prix(UM/H)
+            </th>
+            <td mat-cell *matCellDef="let row">
+              {{ row.prix }}
+            </td>
+          </ng-container>
+          <!--     nbh -->
+          <ng-container matColumnDef="nbh" class="truncate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Heures de travail
+            </th>
+            <td mat-cell *matCellDef="let row">{{ row.th }} / {{ row.nbh }}</td>
+          </ng-container>
+
+          <!--     matiere -->
+          <ng-container matColumnDef="matiere" class="truncate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Element</th>
+            <td mat-cell *matCellDef="let row">
+              {{ row.matiere }}
+            </td>
+          </ng-container>
+
+          <tr
+            mat-header-row
+            *matHeaderRowDef="displayedClms"
+            class="truncate"
+          ></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: displayedClms"
+            class="truncate"
+          ></tr>
+        </table>
+      </div>
+      <mat-card-actions align="end"> </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
+
+<!-- <div class="card">
+  <div class="card-head">
+    <div class="flex flex-col">
+      <h1 class="lg:text-3xl font-extrabold font-mono md:text-sm">
+        <span class="text-transform: capitalize">{{ nom }} {{ prenom }} </span>
+        - Cotisations
+      </h1>
+      <h2>De 22 Dec 2023 jusqua le 30 mar 2024</h2>
+    </div>
+
+    <div class="flex w-full justify-between mt-5">
+      <div class="flex w-full flex-wrap flex-col">
+        <div class="table mb-3">
+          <table>
+            <thead>
+              <tr>
+                <th colspan="2" class="flex justify-start">
+                  <h2>Nombre de cours signés</h2>
+                </th>
+                <th><h2>Nombre d`heures de travail</h2></th>
+                <th><h2>Prix par heure</h2></th>
+                <th><h2>Montant</h2></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let x of facture">
+                <td colspan="2" class="flex justify-start">
+                  <mat-icon class="mr-4 text-green-400">done</mat-icon
+                  >{{ x.nbc }}
+                </td>
+                <td>{{ x.th }}/{{ x.nbh }}</td>
+                <td>{{ x.prix }}</td>
+                <td>{{ x.somme }}</td>
+              </tr>
+
+              <tr>
+                <td class="flex py-3 justify-between" colspan="2">
+                  <button
+                    mat-flat-button
+                    class="px-3 py-2 rounded-lg"
+                    (click)="openChangePeriode()"
+                  >
+                    <mat-icon>edit</mat-icon>
+                    Période
+                  </button>
+
+                  <button
+                    mat-flat-button
+                    class="px-3 py-2 rounded-lg"
+                    color="primary"
+                    (click)="savePaiement()"
+                  >
+                    <mat-icon>save</mat-icon>
+                    Total
+                  </button>
+                  <span class="p-2"> {{ count }}</span>
+                </td>
+
+                <td>{{ TH }}/{{ heuresTV }}</td>
+                <td></td>
+                <td>{{ somme }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
 
-    <div class="card-body">
+    <div class="card-body" *ngIf="detail">
       <div class="head-content-left">
         <div class="search-container">
           <div class="normal-search">
@@ -82,24 +198,24 @@
           </div>
         </div>
       </div>
-      <!---------------------------------------------------------------------------------------------  -->
 
-      <div>
+
+      <div class="truncate">
         <table
           mat-table
           [dataSource]="dataSource"
           matSort
-          class="table table-bordered"
+          class="table table-bordered truncate"
         >
-          <!-- Matiere Column -->
-          <ng-container matColumnDef="matiere">
+           Matiere Column
+          <ng-container matColumnDef="matiere" class="truncate">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Matière</th>
             <td mat-cell *matCellDef="let row">
               {{ row.matiere }}
             </td>
           </ng-container>
-          <!-- somme Column -->
-          <ng-container matColumnDef="somme">
+
+          <ng-container matColumnDef="somme" class="truncate">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
               Montant(MRU)
             </th>
@@ -107,8 +223,8 @@
               {{ row.somme }}
             </td>
           </ng-container>
-          <!-- prix Column -->
-          <ng-container matColumnDef="prix">
+
+          <ng-container matColumnDef="prix" class="truncate">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
               Prix par heure
             </th>
@@ -116,15 +232,15 @@
               {{ row.matiere_prix }}
             </td>
           </ng-container>
-          <!-- type Column -->
-          <ng-container matColumnDef="type">
+
+          <ng-container matColumnDef="type" class="truncate">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
             <td mat-cell *matCellDef="let row">
               {{ row.type }}
             </td>
           </ng-container>
-          <!-- TH Column -->
-          <ng-container matColumnDef="TH">
+
+          <ng-container matColumnDef="TH" class="truncate">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
               Taux horaire
             </th>
@@ -132,31 +248,39 @@
               {{ row.TH }}
             </td>
           </ng-container>
-          <ng-container matColumnDef="debit">
+          <ng-container matColumnDef="3" class="truncate">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Début</th>
             <td mat-cell *matCellDef="let row">
               {{ row.startTime }}
             </td>
           </ng-container>
-          <ng-container matColumnDef="fin">
+          <ng-container matColumnDef="fin" class="truncate">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Fin</th>
             <td mat-cell *matCellDef="let row">
               {{ row.finishTime }}
             </td>
           </ng-container>
 
-          <!-- date Column -->
-          <ng-container matColumnDef="date">
+
+          <ng-container matColumnDef="date" class="truncate">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
             <td mat-cell *matCellDef="let row">
               {{ row.date | date }}
             </td>
           </ng-container>
 
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          <tr
+            mat-header-row
+            *matHeaderRowDef="displayedColumns"
+            class="truncate"
+          ></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: displayedColumns"
+            class="truncate"
+          ></tr>
 
-          <!-- Row shown when there is no matching data. -->
+
         </table>
 
         <mat-paginator
@@ -167,3 +291,55 @@
     </div>
   </div>
 </div>
+
+<div
+  *ngIf="changePeriode"
+  class="fixed left-0 top-0 bg-black bg-opacity-50 w-screen h-screen flex justify-center items-center"
+>
+  <div class="bg-white rounded shadow-md p-8 w-[25%] flex flex-col">
+    <h1>Change période</h1>
+    <form
+      [formGroup]="intervalForm"
+      (ngSubmit)="onFormSubmit()"
+      class="flex flex-col"
+    >
+      <mat-form-field appearance="outline">
+        <mat-label>Début</mat-label>
+        <input matInput [matDatepicker]="debit" formControlName="debit" />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="debit"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #debit></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="fill">
+        <mat-label>Fin</mat-label>
+        <input matInput [matDatepicker]="fin" formControlName="fin" />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="fin"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #fin></mat-datepicker>
+      </mat-form-field>
+      <div class="flex gap-6 justify-end px-1 py-0">
+        <button
+          (click)="openChangePeriode()"
+          mat-raised-button
+          color="cancel"
+          type="button"
+        >
+          Cancel
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          class="mat-radio-button"
+          type="submit"
+        >
+          Change
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+ -->

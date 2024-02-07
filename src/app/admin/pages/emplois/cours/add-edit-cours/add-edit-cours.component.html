@@ -1,21 +1,24 @@
-<div mat-dialog-title>
+<div
+  mat-dialog-title
+  class="border-1 flex justify-start align-items-center py-3"
+>
   <h1>{{ data ? "Modifier la" : "Ajouter une" }} cour</h1>
 </div>
 <form [formGroup]="coursForm" (ngSubmit)="onFormSubmit()">
   <div mat-dialog-content class="content">
-    <div class="row">
-      <mat-form-field appearance="outline">
-        <mat-label>Categorie</mat-label>
-        <select matNativeControl name="categorie" formControlName="categorie">
+    <div class="row border-1 rounded-md py-2 px-6">
+      <mat-form-field appearance="outline" class="mt-4">
+        <mat-label>Professeur</mat-label>
+        <select matNativeControl name="professeur" formControlName="professeur">
+          <option selected value=""></option>
           <option
-            *ngFor="let categorie of categories"
-            value="{{ categorie._id }}"
+            *ngFor="let professeur of professeurs"
+            value="{{ professeur._id }}"
           >
-            {{ categorie.name }}
+            {{ professeur.nom }} {{ professeur.prenom }}
           </option>
         </select>
       </mat-form-field>
-
       <mat-form-field appearance="outline">
         <mat-label>Matiere</mat-label>
         <select matNativeControl name="matiere" formControlName="matiere">
@@ -26,19 +29,24 @@
         </select>
       </mat-form-field>
       <mat-form-field appearance="outline">
-        <mat-label>Professeur</mat-label>
-        <select matNativeControl name="professeur" formControlName="professeur">
-          <option selected value=""></option>
-          <option
-            *ngFor="let professeur of professeurs"
-            value="{{ professeur._id }}"
-          >
-            {{ professeur.nomComplet }}
+        <mat-label>element</mat-label>
+        <select matNativeControl name="element" formControlName="element">
+          <option *ngFor="let element of elements" value="{{ element._id }}">
+            {{ element.filiere }} S{{ element.semestre }}
           </option>
         </select>
       </mat-form-field>
-      <div class="type d-flex justify-content-between p-2">
-        <mat-form-field appearance="outline" class="fill">
+      <!--   <mat-form-field appearance="outline">
+        <mat-label>group</mat-label>
+        <select matNativeControl name="group" formControlName="group">
+          <option *ngFor="let group of groupes" value="{{ group._id }}">
+            G{{ group.numero }} {{ group.type }}
+          </option>
+        </select>
+      </mat-form-field> -->
+
+      <div class="type">
+        <mat-form-field appearance="outline" class="not-fill">
           <mat-label>Date</mat-label>
           <input matInput [matDatepicker]="date" formControlName="date" />
           <mat-datepicker-toggle
@@ -47,8 +55,8 @@
           ></mat-datepicker-toggle>
           <mat-datepicker #date></mat-datepicker>
         </mat-form-field>
-        <mat-form-field appearance="outline" class="fill">
-          <mat-label>Heure debit</mat-label>
+        <mat-form-field appearance="outline" class="not-fill">
+          <mat-label>Début</mat-label>
           <select matNativeControl name="startTime" formControlName="startTime">
             <option *ngFor="let itm of debit_cours" [ngValue]="itm.value">
               {{ itm.date }}
@@ -58,7 +66,7 @@
       </div>
 
       <div class="type justify-content-between">
-        <mat-form-field appearance="outline" class="fill">
+        <mat-form-field appearance="outline" class="not-fill">
           <mat-label>Nombre d'heures</mat-label>
           <input
             name="nbh"
@@ -69,7 +77,7 @@
           />
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="fill">
+        <mat-form-field appearance="outline" class="not-fill">
           <mat-label>Type</mat-label>
           <select matNativeControl name="type" formControlName="type">
             <option selected value=""></option>
@@ -83,20 +91,18 @@
   </div>
   <div mat-dialog-actions class="action">
     <button
-      mat-raised-button
-      class="mat-radio-button"
+      mat-stroked-button
+      class="px-3"
       type="button"
+      color="warn"
       [mat-dialog-close]="false"
     >
-      Cancel
+      Annuler
+      <mat-icon>close</mat-icon>
     </button>
-    <button
-      mat-raised-button
-      color="primary"
-      class="mat-radio-button"
-      type="submit"
-    >
-      {{ data ? "Update" : "Save" }}
+    <button mat-stroked-button color="primary" class="px-3" type="submit">
+      {{ data ? "Modifier" : "Enregistrer" }}
+      <mat-icon>checked</mat-icon>
     </button>
   </div>
 </form>

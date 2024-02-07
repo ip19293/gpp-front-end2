@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { DialogService } from '../../services/dialog.service';
 import { UserService } from '../../services/user.service';
+import { NewUserComponent } from './new-user/new-user.component';
 
 @Component({
   selector: 'app-users',
@@ -19,9 +20,9 @@ export class UsersComponent implements OnInit {
   displayedColumns: string[] = [
     'nom',
     'email',
+    /* 'mobile', */
     'role',
     'active',
-    'active-desactive',
     'action',
   ];
   dataSource!: MatTableDataSource<any>;
@@ -58,6 +59,7 @@ export class UsersComponent implements OnInit {
       this.dataSource = new MatTableDataSource(res.users);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
+      this.paginator._intl.itemsPerPageLabel = "Nombre d'eléments par page";
       //console.warn(this.users.email);
     });
   }
@@ -71,17 +73,17 @@ export class UsersComponent implements OnInit {
   deleteUser(enent: any, id: string) {
     this.dialog
       .confirmDialog({
-        title: 'Are you sure',
-        message: 'are you sure you wont to delete this user ?',
-        confirmText: 'Yes',
-        cancelText: 'No',
+        title: 'Cette action est irréversible !',
+        message: ` Etes-vous sùr de vouloir suprimer l'Utilisateur ?`,
+        confirmText: 'Oui',
+        cancelText: 'Annuler',
       })
       .subscribe({
         next: (res: any) => {
           if (res) {
             this.userServices.deleteUser(id).subscribe({
               next: (resul: any) => {
-                this.toastr.success(`User Delete ssucces!`, `success`);
+                this.toastr.success(`${resul.message}`, `${resul.status}`);
                 this.getUsers();
               },
               error: (err) => {
@@ -97,7 +99,7 @@ export class UsersComponent implements OnInit {
 
   openAddUserComp() {
     this.option = true;
-    const dialogFef = this._dialog.open(AddEditUsersComponent);
+    const dialogFef = this._dialog.open(NewUserComponent);
     dialogFef.afterClosed().subscribe({
       next: (val) => {
         if (val) {

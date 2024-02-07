@@ -29,12 +29,16 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { RouterModule } from '@angular/router';
 import { ListCategorieModule } from './admin/pages/categorie/list-categorie/list-categorie.module';
+import { UserModule } from './user/user.module';
+import { UserDashbordComponent } from './user-dashbord/user-dashbord.component';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { LayoutModule } from '@angular/cdk/layout';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, UserDashbordComponent],
   imports: [
     MatToolbarModule,
     MatSliderModule,
@@ -70,7 +74,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatMenuModule,
     AdminModule,
     AuthModule,
+    UserModule,
     ListCategorieModule,
+    MatGridListModule,
+    LayoutModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

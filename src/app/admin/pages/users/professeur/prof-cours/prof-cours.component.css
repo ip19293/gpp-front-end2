@@ -1,9 +1,6 @@
-.mat-oui {
-  color: green;
-}
-.mat-NO {
-  color: red;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 .head-content-left {
   .search-container {
     position: relative;
@@ -42,4 +39,28 @@
       color: #699dfa;
     }
   }
+}
+.mat-green {
+  color: green;
+}
+.mat-red {
+  color: red;
+}
+.table {
+  width: 100%;
+  border: 3px solid whitesmoke;
+  border-radius: 10px;
+  th {
+    @apply font-semibold bg-blend-lighten;
+  }
+}
+
+.mat-oui {
+  color: green;
+}
+.mat-NO {
+  color: red;
+}
+.spacer {
+  flex: 1 1 auto;
 }

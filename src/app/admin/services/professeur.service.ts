@@ -38,6 +38,17 @@ export class ProfesseurService {
       }
     );
   }
+
+  uploadProfesseurs(data: any): Observable<any> {
+    return this.http.post(
+      'http://localhost:5000/professeur/upload',
+
+      data,
+      {
+        headers: this._headers,
+      }
+    );
+  }
   deleteProfesseur(id: string): Observable<any> {
     return this.http.delete(`http://localhost:5000/professeur/${id}`, {
       headers: this._headers,
@@ -57,6 +68,15 @@ export class ProfesseurService {
   getProfesseurCours(id: any): Observable<any> {
     return this.http.get(
       `http://localhost:5000/professeur/${id}/cours`,
+
+      {
+        headers: this._headers,
+      }
+    );
+  }
+  getProfesseurCoursSigned(id: any): Observable<any> {
+    return this.http.get(
+      `http://localhost:5000/professeur/${id}/cours-oui`,
 
       {
         headers: this._headers,

@@ -60,9 +60,13 @@ export class LoginComponent implements OnInit {
             }); */
         }
         this.isLogin = true;
-        this.route.navigate(['admin']);
+        if (this.role == 'admin') {
+          this.route.navigate(['admin']);
+        } else {
+          this.route.navigate(['user']);
+        }
         this.toastr.success(
-          `Welcome  ${localStorage.getItem('role')} !`,
+          `Bienvenue  ${localStorage.getItem('role')} !`,
           `${res.status}`
         );
       },

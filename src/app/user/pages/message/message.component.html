@@ -1,0 +1,78 @@
+<div class="card">
+  <div class="card-header">
+    <div class="flex w-full justify-between">
+      <h1 class="text-3xl font-extrabold font-mono">Liste de cours</h1>
+    </div>
+  </div>
+  <div class="card-body">
+    <cdk-accordion class="example-accordion">
+      <cdk-accordion-item
+        *ngFor="let cour of cours; let index = index"
+        #accordionItem="cdkAccordionItem"
+        class="example-accordion-item"
+        role="button"
+        tabindex="0"
+        [attr.id]="'accordion-header-' + index"
+        [attr.aria-expanded]="accordionItem.expanded"
+        [attr.aria-controls]="'accordion-body-' + index"
+      >
+        <div class="example-accordion-item-header">
+          <span class="text-xl font-medium"
+            ><button mat-button (click)="accordionItem.toggle()">
+              <span class="capitalize"
+                >{{ cour.date | date }} - {{ cour.startTime }} -
+                {{ cour.finishTime }}</span
+              >
+            </button></span
+          >
+          <!--   <span class="example-accordion-item-description">
+            {{ accordionItem.expanded ? "close" : "open" }}
+          </span> -->
+          <div class="action">
+            <button mat-button (click)="accordionItem.toggle()">
+              <mat-icon>{{
+                accordionItem.expanded
+                  ? "keyboard_arrow_up"
+                  : "keyboard_arrow_down "
+              }}</mat-icon>
+            </button>
+            <span></span>
+
+            <span></span>
+            <a
+              mat-stroked-button
+              (click)="signeCours($event, cour._id)"
+              color=""
+            >
+              <mat-icon color="primary">approval</mat-icon>
+              Signez
+            </a>
+          </div>
+        </div>
+        <div
+          class="example-accordion-item-body text-lg font-normal"
+          role="region"
+          [style.display]="accordionItem.expanded ? '' : 'none'"
+          [attr.id]="'accordion-body-' + index"
+          [attr.aria-labelledby]="'accordion-header-' + index"
+        >
+          <p>
+            <span class="capitalize ordinal font-medium text-xl"
+              >{{ cour.matiere }} </span
+            >{{ cour.code }}
+          </p>
+          <p class="ordinal">Type : {{ cour.type }}</p>
+          <p class="ordinal">Nombre d'heures : {{ cour.nbh }}</p>
+          <p class="ordinal">Taux horeurs : {{ cour.TH }}</p>
+        </div>
+      </cdk-accordion-item>
+    </cdk-accordion>
+    <div
+      *ngIf="isVide"
+      class="flex w-full bg-blue-50 py-3 rounded-lg text-xl px-10 justify-between"
+    >
+      <p>Votre liste est vide !!!</p>
+      <span><mat-icon color="warn">warning</mat-icon></span>
+    </div>
+  </div>
+</div>

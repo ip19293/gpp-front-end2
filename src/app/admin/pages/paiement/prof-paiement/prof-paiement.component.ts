@@ -1,11 +1,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { CoursService } from 'src/app/admin/services/cours.service';
+import { DialogService } from 'src/app/admin/services/dialog.service';
+import { PaiementService } from 'src/app/admin/services/paiement.service';
 import { ProfesseurService } from 'src/app/admin/services/professeur.service';
+import { ChangePeriodeDialogComponent } from '../change-periode-dialog/change-periode-dialog.component';
 
 @Component({
   selector: 'app-prof-paiement',
@@ -23,22 +28,28 @@ export class ProfPaiementComponent implements OnInit {
     'prix',
     'somme',
   ];
+  displayedClms: string[] = ['matiere', 'nbc', 'nbh', 'prix', 'montant'];
   cours: any;
+  facture: any;
   dataSource!: MatTableDataSource<any>;
+  dataSrs!: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  nbc: String = 'Nombre des cours : ';
-  nbh: String = 'Nombres d`heures : ';
-  ts: String = '  Montant(MRU): ';
+  nbc: String = 'Nombre de cours signés : ';
+  nbh: String = 'Nombre d`heures de travail : ';
+  ts: String = '  Montant(MRU) : ';
   tp: String = 'Total payament  ';
   fr: String = 'A partir de';
   t: String = 'Vers le';
-  from: any;
-  to: any;
+  changePeriode = false;
+
+  fromDate: any;
+  toDate: any;
   id: any;
   prof: any;
-  nomComplet: any;
+  nom: any;
+  prenom: any;
   email: any;
   mobile: any;
   total: any;
@@ -46,48 +57,115 @@ export class ProfPaiementComponent implements OnInit {
   count: any;
   somme: any;
   heuresTV: any;
+  TH: any;
   intervalForm: FormGroup;
+  paiementForm!: FormGroup;
   new: any;
+  detail = false;
+
   constructor(
     private active: ActivatedRoute,
     private cours_service: CoursService,
     private prof_service: ProfesseurService,
+    private _dialog: MatDialog,
+    private dialog: DialogService,
+    private paiement_service: PaiementService,
+    private toastr: ToastrService,
     private builder: FormBuilder
   ) {
     this.active.params.subscribe((res: any) => {
       this.id = res.id;
-      console.log(res.id);
+      // console.log(res.id);
     });
     this.intervalForm = builder.group({
       debit: builder.control('', Validators.required),
       fin: builder.control('', Validators.required),
     });
   }
+  openDialog(): void {
+    const dialogRef = this._dialog.open(ChangePeriodeDialogComponent, {
+      data: { fromDate: this.fromDate, toDate: this.toDate },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed');
+      this.fromDate = result.fromDate;
+      this.toDate = result.toDate;
+      let dt = {
+        debit: result.fromDate,
+        fin: result.toDate,
+      };
+      this.cours_service.getTotalCoursProf(this.id, dt).subscribe((res) => {
+        this.count = res.professeur.nbc;
+        this.heuresTV = res.professeur.nbh;
+        this.TH = res.professeur.th;
+        this.somme = res.professeur.somme;
+        this.facture = res.facture;
+        this.cours = res.cours;
+        this.dataSource = new MatTableDataSource(res.cours);
+        this.dataSrs = new MatTableDataSource(res.facture);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+        console.warn(res.cours);
+      });
+    });
+  }
   ngOnInit(): void {
     this.getProfDetail();
     this.getTotalCoursProf();
   }
+  openChangePeriode(): void {
+    this.changePeriode = !this.changePeriode;
+  }
+  savePaiement() {
+    let data = {
+      fromDate: this.fromDate,
+      toDate: this.toDate,
+      professeur: this.id,
+      nbh: this.heuresTV,
+      nbc: this.count,
+      th: this.TH,
+      totalMontant: this.somme,
+      cours: this.cours,
+    };
+
+    this.paiement_service.addPaiement(data).subscribe({
+      next: (val: any) => {
+        this.toastr.success(`${val.message}`, `${val.status} `);
+        this.getTotalCoursProf();
+      },
+      error: (err: any) => {
+        this.toastr.error(`${err.error.message}`, `${err.error.status} `);
+      },
+    });
+  }
   onFormSubmit() {
     if (this.intervalForm.valid) {
-      this.from = this.intervalForm.value.debit;
-      this.to = this.intervalForm.value.fin;
+      this.fromDate = this.intervalForm.value.debit;
+      this.toDate = this.intervalForm.value.fin;
       this.cours_service
         .getTotalCoursProf(this.id, this.intervalForm.value)
         .subscribe((res) => {
           this.count = res.professeur.nbc;
           this.heuresTV = res.professeur.nbh;
+          this.TH = res.professeur.th;
           this.somme = res.professeur.somme;
-          //this.cours = res.cours;
+          this.facture = res.facture;
+          this.cours = res.cours;
           this.dataSource = new MatTableDataSource(res.cours);
+          this.dataSrs = new MatTableDataSource(res.facture);
           this.dataSource.sort = this.sort;
           this.dataSource.paginator = this.paginator;
+          console.warn(res.cours);
         });
+      this.changePeriode = false;
     }
   }
   getProfDetail() {
     this.prof_service.getProfesseur(this.id).subscribe((res) => {
       this.prof = res.professeur;
-      this.nomComplet = res.professeur.nomComplet;
+      this.nom = res.professeur.nom;
+      this.prenom = res.professeur.prenom;
       this.email = res.professeur.email;
       this.mobile = res.professeur.mobile;
       console.log(this.prof);
@@ -98,13 +176,16 @@ export class ProfPaiementComponent implements OnInit {
     this.cours_service
       .getTotalCoursProf(this.id, null)
       .subscribe((res: any) => {
-        this.from = res.first_cours_date;
-        this.to = res.last_cours_date;
+        this.fromDate = res.professeur.firstCours;
+        this.toDate = res.professeur.lastCours;
         this.count = res.professeur.nbc;
         this.heuresTV = res.professeur.nbh;
+        this.TH = res.professeur.th;
         this.somme = res.professeur.somme;
         this.cours = res.cours;
+        this.facture = res.facture;
         this.dataSource = new MatTableDataSource(res.cours);
+        this.dataSrs = new MatTableDataSource(res.facture);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
       });

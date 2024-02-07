@@ -52,7 +52,8 @@ export class AddEditProfesseurComponent implements OnInit {
   }
   ngOnInit(): void {
     this.professeurForm = this.builder.group({
-      nomComplet: ['', Validators.required],
+      nom: ['', Validators.required],
+      prenom: ['', Validators.required],
       accountNumero: [
         '',
         [

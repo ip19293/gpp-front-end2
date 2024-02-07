@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { PaiementRoutingModule } from './paiement-routing.module';
-
+import { CdkMenuModule } from '@angular/cdk/menu';
 import { ListRefusePaiementComponent } from './list-refuse-paiement/list-refuse-paiement.component';
 import { ListTerminePaiementComponent } from './list-termine-paiement/list-termine-paiement.component';
 import { ListValidePaiementComponent } from './list-valide-paiement/list-valide-paiement.component';
@@ -26,6 +26,12 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ProfPaiementComponent } from './prof-paiement/prof-paiement.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { CotisationComponent } from './cotisation/cotisation.component';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatBadgeModule } from '@angular/material/badge';
+import { CdkAccordionModule } from '@angular/cdk/accordion';
+import { DialogModule } from '@angular/cdk/dialog';
+import { ChangePeriodeDialogComponent } from './change-periode-dialog/change-periode-dialog.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +41,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     ListValidePaiementComponent,
     ListCreePaiementComponent,
     ProfPaiementComponent,
+    CotisationComponent,
+    ChangePeriodeDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -53,11 +61,15 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-
+    CdkMenuModule,
     MatStepperModule,
     FormsModule,
     ReactiveFormsModule,
     MatDatepickerModule,
+    MatChipsModule,
+    MatBadgeModule,
+    CdkAccordionModule,
+    DialogModule,
   ],
 })
 export class PaiementModule {}

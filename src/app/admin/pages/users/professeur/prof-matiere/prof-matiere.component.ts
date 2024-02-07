@@ -21,7 +21,7 @@ export class ProfMatiereComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   id: any;
-  nomComplet: any;
+  nom: any;
   prenom: any;
   email: any;
   mobile: any;
@@ -54,20 +54,16 @@ export class ProfMatiereComponent implements OnInit {
 
   getProfesseurDetail() {
     this.service.getProfesseur(this.id).subscribe((res) => {
-      try {
-        if (res.status === 'succés') {
-          this.id = res.professeur._id;
-          this.nomComplet = res.professeur.nomComplet;
-          this.email = res.professeur.email;
-          this.mobile = res.professeur.mobile;
-          this.matieres = res.matieres;
-          this.dataSource = new MatTableDataSource(res.matieres);
-          this.dataSource.sort = this.sort;
-          this.dataSource.paginator = this.paginator;
-        }
-      } catch (error) {
-        console.log;
-      }
+      this.id = res.professeur._id;
+      this.prenom = res.professeur.prenom;
+      this.nom = res.professeur.nom;
+      this.email = res.professeur.email;
+      this.mobile = res.professeur.mobile;
+      this.matieres = res.matieres;
+      this.dataSource = new MatTableDataSource(res.matieres);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+      this.paginator._intl.itemsPerPageLabel = "Nombre d'eléments par page";
     });
   }
   openAddMatiereComp() {
@@ -96,11 +92,10 @@ export class ProfMatiereComponent implements OnInit {
   deleteOneMatFromProf(event: any, idM: any) {
     this.dialog
       .confirmDialog({
-        title: 'Are you sure',
-        message:
-          'are you sure you wont to delete this matiere from list of this professeur ?',
-        confirmText: 'Yes',
-        cancelText: 'No',
+        title: 'Cette action est irréversible !',
+        message: `Etes-vous sùr de vouloir suprimer la matiére ?`,
+        confirmText: 'Oui',
+        cancelText: 'Annuler',
       })
       .subscribe({
         next: (res: any) => {

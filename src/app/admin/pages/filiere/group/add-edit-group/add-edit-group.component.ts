@@ -25,7 +25,8 @@ export class AddEditGroupComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.groupForm = this.builder.group({
-      name: [''],
+      numero: ['', Validators.required],
+      type: ['', Validators.required],
       semestre: ['', Validators.required],
     });
     this.id = localStorage.getItem('filliere');
@@ -34,7 +35,7 @@ export class AddEditGroupComponent implements OnInit {
     if (this.groupForm.valid) {
       if (this.data) {
         this.service_group
-          .updateGroup(this.data.group_id, this.groupForm.value)
+          .updateGroup(this.data._id, this.groupForm.value)
           .subscribe({
             next: (val) => {
               this.toastr.success(`${val.message} `, `${val.status} `);

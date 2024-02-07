@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FiliereService } from 'src/app/admin/services/filiere.service';
 import { SemestresService } from 'src/app/admin/services/semestres.service';
-import { AddEditElementComponent } from './add-edit-element/add-edit-element.component';
+
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -9,6 +9,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { DialogService } from 'src/app/admin/services/dialog.service';
+import { AddEditSemestreComponent } from './add-edit-semestre/add-edit-semestre.component';
 
 @Component({
   selector: 'app-semestre',
@@ -17,12 +18,13 @@ import { DialogService } from 'src/app/admin/services/dialog.service';
 })
 export class SemestreComponent implements OnInit {
   id: any;
-  displayedColumns: string[] = ['semestre', 'code_EM', 'element', 'action'];
+  displayedColumns: string[] = ['numero', 'start', 'finish', 'action'];
   dataSource!: MatTableDataSource<any>;
+  filliere_id: any;
   filliere: any;
   description: any;
   niveau: any;
-
+  space = '    ';
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   constructor(
@@ -39,7 +41,7 @@ export class SemestreComponent implements OnInit {
       console.log(res.id);
     });
     localStorage.setItem('filliere', this.id);
-    // console.warn(localStorage.getItem('filliere'));
+    this.getFilliereById();
   }
   ngOnInit(): void {
     this.getFilliereById();
@@ -47,27 +49,29 @@ export class SemestreComponent implements OnInit {
 
   getFilliereById() {
     this.service_filliere.getFilliereById(this.id).subscribe((res) => {
-      this.dataSource = new MatTableDataSource(res.elements);
+      this.dataSource = new MatTableDataSource(res.semestres);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
       this.filliere = res.filliere;
+      this.filliere_id = res._id;
       this.description = res.description;
       this.niveau = res.niveau;
+      this.paginator._intl.itemsPerPageLabel = "Nombre d'eléments par page";
       // console.warn(res);
     });
   }
-  deleteElement(event: any, id: string, idM: string) {
+  delete(event: any, id: string) {
     this.dialog
       .confirmDialog({
-        title: 'Es-tu sùr',
-        message: 'Voulez vous vraiment supprimé cett element ?',
+        title: 'Cette action est irréversible !',
+        message: `Etes-vous sùr de vouloir suprimer  cet semestre ?`,
         confirmText: 'Oui',
-        cancelText: 'No',
+        cancelText: 'Annuler',
       })
       .subscribe({
         next: (res: any) => {
           if (res) {
-            this.service.removeElementFromSemestre(id, idM).subscribe({
+            this.service.deleteSemestre(id).subscribe({
               next: (res) => {
                 this.toastr.success(`${res.message}`, `${res.status}`);
                 this.getFilliereById();
@@ -81,8 +85,10 @@ export class SemestreComponent implements OnInit {
         },
       });
   }
-  openAddElementComp() {
-    const dialogFef = this._dialog.open(AddEditElementComponent);
+  openAddSemestreComp(id: any) {
+    const dialogFef = this._dialog.open(AddEditSemestreComponent, {
+      id,
+    });
     dialogFef.afterClosed().subscribe({
       next: (val) => {
         if (val) {
@@ -91,8 +97,8 @@ export class SemestreComponent implements OnInit {
       },
     });
   }
-  openEditElementComp(data: any) {
-    const dialogFef = this._dialog.open(AddEditElementComponent, {
+  openEditSemestreComp(data: any) {
+    const dialogFef = this._dialog.open(AddEditSemestreComponent, {
       data,
     });
 

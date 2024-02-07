@@ -22,13 +22,12 @@ export class AuthService {
   signup(data: any): Observable<any> {
     return this.http.post('http://localhost:5000/auth/signup', data);
   }
-  forget(data: any) {
-    this.http
-      .post('http://localhost:5000/auth/forgotPassword', data)
-      .subscribe((result: any) => {
+  forget(data: any): Observable<any> {
+    return this.http.post('http://localhost:5000/auth/forgotPassword', data);
+    /*     .subscribe((result: any) => {
         this.router.navigate(['/admin/login/reset']);
         alert(`STATUS:${result.status} ${result.message}`);
-      });
+      }); */
   }
 
   reset(data: any, token: string) {

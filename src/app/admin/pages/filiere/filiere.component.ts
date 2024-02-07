@@ -8,7 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { DialogService } from '../../services/dialog.service';
 import { FiliereService } from '../../services/filiere.service';
 import { AddEditFiliereComponent } from './add-edit-filiere/add-edit-filiere.component';
-
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 @Component({
   selector: 'app-filiere',
   templateUrl: './filiere.component.html',
@@ -26,26 +26,36 @@ export class FiliereComponent implements OnInit {
     private _dialog: MatDialog,
     private dialog: DialogService,
     private toastr: ToastrService
-  ) {}
+  ) {
+    this.getFillieres();
+  }
   ngOnInit(): void {
     this.getFillieres();
   }
-
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(
+      this.displayedColumns,
+      event.previousIndex,
+      event.currentIndex
+    );
+  }
   getFillieres() {
     this.service.getAllFillieres().subscribe((res) => {
-      this.dataSource = new MatTableDataSource(res.fillieres);
+      this.dataSource = new MatTableDataSource(res.filieres);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
+      this.paginator._intl.itemsPerPageLabel = "Nombre d'eléments par page";
       //console.warn(this.users.email);
     });
   }
+
   deleteFilliere(event: any, id: string) {
     this.dialog
       .confirmDialog({
-        title: 'Are you sure',
-        message: 'are you sure you wont to delete this filliere ?',
-        confirmText: 'Yes',
-        cancelText: 'No',
+        title: 'Cette action est irréversible !',
+        message: 'Etes-vous sùr de vouloir suprimer cet filiére ?',
+        confirmText: 'Oui',
+        cancelText: 'Annuler',
       })
       .subscribe({
         next: (res: any) => {

@@ -52,7 +52,6 @@ export class ListCategorieComponent implements OnInit {
     private toastr: ToastrService
   ) {}
   ngOnInit(): void {
-    this.paginator._intl.itemsPerPageLabel = "Nombre d'eléments par page";
     this.getCategories();
   }
 
@@ -61,16 +60,17 @@ export class ListCategorieComponent implements OnInit {
       this.dataSource = new MatTableDataSource(res.categories);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
+      this.paginator._intl.itemsPerPageLabel = "Nombre d'eléments par page";
       //console.warn(this.users.email);
     });
   }
   deleteCategorie(event: any, id: string, name: string) {
     this.dialog
       .confirmDialog({
-        title: 'Are you sure',
-        message: 'are you sure you wont to delete this categorie ?',
-        confirmText: 'Yes',
-        cancelText: 'No',
+        title: 'Cette action est irréversible !',
+        message: 'Etes-vous sùr de vouloir suprimer cet catégorie ?',
+        confirmText: 'Oui',
+        cancelText: 'Annuler',
       })
       .subscribe({
         next: (res: any) => {

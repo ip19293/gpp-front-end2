@@ -21,10 +21,11 @@ export class EmploisComponent implements OnInit {
   idS: any;
   displayedColumns: string[] = [
     'jour',
+    'matiere',
+    'type',
     'startTime',
     'finishTime',
     'professeur',
-    'matiere',
     'action',
   ];
   groups: any;
@@ -33,6 +34,7 @@ export class EmploisComponent implements OnInit {
   semestre: any;
   niveau: any;
   annee: any;
+  group_type: any;
   description: any;
   dataSource!: MatTableDataSource<any>;
 
@@ -56,6 +58,7 @@ export class EmploisComponent implements OnInit {
     });
     localStorage.setItem('idG', this.idG);
     localStorage.setItem('idS', this.idS);
+    this.getGroupByIdEmplois();
   }
 
   ngOnInit(): void {
@@ -68,6 +71,7 @@ export class EmploisComponent implements OnInit {
       this.dataSource = new MatTableDataSource(res.emplois);
       this.groups = res.groups;
       this.group = res.group;
+      this.group_type = res.group_type;
       this.filliere = res.filliere;
       this.semestre = res.semestre;
       this.niveau = res.niveau;
@@ -75,16 +79,17 @@ export class EmploisComponent implements OnInit {
       this.description = res.description;
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
+      this.paginator._intl.itemsPerPageLabel = "Nombre d'eléments par page";
       console.warn(res);
     });
   }
   removeEmploi(event: any, id: string) {
     this.dialog
       .confirmDialog({
-        title: 'Are you sure',
-        message: 'are you sure you wont to delete this emploi ?',
-        confirmText: 'Yes',
-        cancelText: 'No',
+        title: 'Cette action est irréversible !',
+        message: `Etes-vous sùr de vouloir suprimer l'emploi ?`,
+        confirmText: 'Oui',
+        cancelText: 'Annuler',
       })
       .subscribe({
         next: (res: any) => {

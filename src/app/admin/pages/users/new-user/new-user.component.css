@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.content {
+  padding-top: 20px;
+}
+.fullname,
+.active-role,
+.banque {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  .not-fill {
+    width: 48%;
+  }
+}
+.row {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  .fill {
+    width: 100%;
+  }
+}
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
+}
+.action {
+  padding: 0px 25px 20px;
+}

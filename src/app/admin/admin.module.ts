@@ -26,6 +26,7 @@ import { ConfirmComponent } from './components/dialogs/confirm/confirm.component
 import { HeaderComponent } from './components/header/header.component';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { CdkMenuModule } from '@angular/cdk/menu';
+import { ChangePeriodeComponent } from './components/dialogs/change-periode/change-periode.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { CdkMenuModule } from '@angular/cdk/menu';
     SublevelMenuComponent,
     ConfirmComponent,
     HeaderComponent,
+    ChangePeriodeComponent,
   ],
   imports: [
     CommonModule,

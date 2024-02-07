@@ -1,0 +1,93 @@
+<div mat-dialog-title class="border-b pb-3">
+  <h1 class="text-xl font-medium">
+    {{ data ? "Modifier l'" : "Ajouter un " }}utilisateur
+  </h1>
+</div>
+<form [formGroup]="userForm" (ngSubmit)="onFormSubmit()">
+  <div mat-dialog-content class="content">
+    <div class="row border-1 rounded-md py-2 px-6">
+      <div class="fullname mt-4">
+        <mat-form-field appearance="outline" class="not-fill">
+          <mat-label>Nom</mat-label>
+          <input name="nom" type="text" matInput formControlName="nom" />
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="not-fill">
+          <mat-label>Prenom</mat-label>
+          <input name="prenom" type="text" matInput formControlName="prenom" />
+        </mat-form-field>
+      </div>
+      <mat-form-field appearance="outline">
+        <mat-label>Téléphone</mat-label>
+        <input name="mobile" type="number" matInput formControlName="mobile" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>E-mail</mat-label>
+        <input name="nom" type="email" matInput formControlName="email" />
+      </mat-form-field>
+      <div class="banque">
+        <mat-form-field appearance="outline" class="not-fill">
+          <mat-label>Numero de compte</mat-label>
+          <input
+            name="accountNumero"
+            type="number"
+            matInput
+            formControlName="accountNumero"
+          />
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="not-fill">
+          <mat-label>Banque</mat-label>
+          <mat-select formControlName="banque">
+            <mat-option *ngFor="let banque of banques" value="{{ banque }}">
+              {{ banque }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="outline" class="fill">
+        <mat-label>Role</mat-label>
+        <mat-select formControlName="role">
+          <mat-option value="user"> User</mat-option>
+          <mat-option value="professeur">Professeur</mat-option>
+          <mat-option value="responsable"> Responsable</mat-option>
+          <mat-option value="admin"> Admin</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-100" *ngIf="!data">
+        <input
+          matInput
+          placeholder="Mot de passe"
+          type="password"
+          formControlName="password"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100" *ngIf="!data">
+        <input
+          matInput
+          placeholder="Mot de passe confirme"
+          type="password"
+          formControlName="passwordConfirm"
+          required
+        />
+      </mat-form-field>
+    </div>
+  </div>
+  <div mat-dialog-actions class="action">
+    <button
+      mat-stroked-button
+      class="px-3"
+      type="button"
+      color="warn"
+      [mat-dialog-close]="false"
+    >
+      Annuler
+      <mat-icon>close</mat-icon>
+    </button>
+    <button mat-stroked-button color="primary" class="px-3" type="submit">
+      {{ data ? "Modifier" : "Enregistrer" }}
+      <mat-icon>checked</mat-icon>
+    </button>
+  </div>
+</form>

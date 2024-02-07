@@ -23,6 +23,9 @@ export class MatiereService {
     });
   }
 
+  uploadsMatieres(data: any): Observable<any> {
+    return this.http.post('http://localhost:5000/matiere/upload', data);
+  }
   addMatiere(data: any): Observable<any> {
     return this.http.post('http://localhost:5000/matiere', data, {
       headers: this._headers,
@@ -38,8 +41,13 @@ export class MatiereService {
       headers: this._headers,
     });
   }
-  getProfOfMatieres(id: any): Observable<any> {
-    return this.http.get(`http://localhost:5000/matiere/${id}/professeur`, {
+  getProfesseursByMatiereId(id: any): Observable<any> {
+    return this.http.get(`http://localhost:5000/matiere/${id}/professeurs`, {
+      headers: this._headers,
+    });
+  }
+  getElementsByMatiereId(id: any): Observable<any> {
+    return this.http.get(`http://localhost:5000/matiere/${id}/elements`, {
       headers: this._headers,
     });
   }

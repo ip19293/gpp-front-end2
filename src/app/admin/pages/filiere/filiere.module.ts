@@ -24,10 +24,13 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatStepperModule } from '@angular/material/stepper';
-import { AddEditElementComponent } from './semestre/add-edit-element/add-edit-element.component';
 import { EmploisComponent } from './group/emplois/emplois.component';
 import { AddEditEmploiComponent } from './group/emplois/add-edit-emploi/add-edit-emploi.component';
-
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { ElementComponent } from './semestre/element/element.component';
+import { AddEditElemComponent } from './semestre/element/add-edit-elem/add-edit-elem.component';
+import { FiliereDetailComponent } from './filiere-detail/filiere-detail.component';
+import { AddEditElementComponent } from './add-edit-element/add-edit-element.component';
 @NgModule({
   declarations: [
     FiliereComponent,
@@ -36,9 +39,12 @@ import { AddEditEmploiComponent } from './group/emplois/add-edit-emploi/add-edit
     AddEditSemestreComponent,
     GroupComponent,
     AddEditGroupComponent,
-    AddEditElementComponent,
     EmploisComponent,
     AddEditEmploiComponent,
+    ElementComponent,
+    AddEditElemComponent,
+    FiliereDetailComponent,
+    AddEditElementComponent,
   ],
   imports: [
     CommonModule,
@@ -60,6 +66,7 @@ import { AddEditEmploiComponent } from './group/emplois/add-edit-emploi/add-edit
     MatStepperModule,
     FormsModule,
     ReactiveFormsModule,
+    MatDatepickerModule,
   ],
 })
 export class FiliereModule {}

@@ -1,0 +1,501 @@
+<div class="card max-h-[400px]">
+  <div class="card-header">
+    <div class="flex w-full justify-between">
+      <h1 class="lg:text-3xl font-extrabold font-mono text-xl">L'horaire</h1>
+    </div>
+  </div>
+  <div class="card-body max-h-[100px]">
+    <div class="flex flex-col space-y-4 max-w-[400px] max-h-[100px]">
+      <div class="lg:flex lg:justify-between lg:items-center">
+        <!-- --------------------------------------------------------------------------------------Dimanche------------------- -->
+        <cdk-accordion
+          class="example-accordion border-1 rounded-lg"
+          *ngIf="groupedEmploi?.Dimanche"
+        >
+          <div class="lg:flex justify-between w-full flex-col">
+            <h2 class="lg:text-xl font-serif font-extrabold py-3 pl-4 text-lg">
+              Dimanche
+            </h2>
+
+            <span class="relative flex h-3 w-3" *ngIf="0 == today">
+              <span
+                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"
+              ></span>
+              <span
+                class="relative inline-flex rounded-full h-3 w-3 bg-green-500"
+              ></span>
+            </span>
+          </div>
+
+          <cdk-accordion-item
+            *ngFor="let emploi of groupedEmploi?.Dimanche; let index = index"
+            #accordionItem="cdkAccordionItem"
+            class="example-accordion-item"
+            role="button"
+            tabindex="0"
+            [attr.id]="'accordion-header-' + index"
+            [attr.aria-expanded]="accordionItem.expanded"
+            [attr.aria-controls]="'accordion-body-' + index"
+            (click)="accordionItem.toggle()"
+          >
+            <div class="example-accordion-item-header">
+              <span class="text-xl font-bold">
+                <span class="capitalize">
+                  {{ emploi.startTime }} - {{ emploi.finishTime }} -
+                  {{ emploi.niveau }} {{ emploi.filliere }} (S{{
+                    emploi.semestre
+                  }})
+                </span>
+              </span>
+
+              <div class="action">
+                <button mat-button>
+                  <mat-icon>{{
+                    accordionItem.expanded
+                      ? "keyboard_arrow_up"
+                      : "keyboard_arrow_down "
+                  }}</mat-icon>
+                </button>
+                <span></span>
+
+                <span></span>
+              </div>
+            </div>
+            <div
+              class="example-accordion-item-body text-lg font-normal"
+              role="region"
+              [style.display]="accordionItem.expanded ? '' : 'none'"
+              [attr.id]="'accordion-body-' + index"
+              [attr.aria-labelledby]="'accordion-header-' + index"
+            >
+              <p>
+                <span class="capitalize ordinal font-medium text-xl"
+                  >{{ emploi.matiere }}
+                </span>
+              </p>
+              <p class="ordinal">Type : {{ emploi.type }}</p>
+            </div>
+          </cdk-accordion-item>
+        </cdk-accordion>
+        <!-- --------------------------------------------------------------------------------------Lundi------------------- -->
+        <cdk-accordion
+          class="example-accordion border-1 rounded-lg"
+          *ngIf="groupedEmploi?.Lundi"
+        >
+          <div class="flex justify-between w-full">
+            <h2 class="text-xl font-serif font-extrabold py-3 pl-4">Lundi</h2>
+
+            <span class="relative flex h-3 w-3" *ngIf="1 == today">
+              <span
+                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"
+              ></span>
+              <span
+                class="relative inline-flex rounded-full h-3 w-3 bg-green-500"
+              ></span>
+            </span>
+          </div>
+
+          <cdk-accordion-item
+            *ngFor="let emploi of groupedEmploi?.Lundi; let index = index"
+            #accordionItem="cdkAccordionItem"
+            class="example-accordion-item"
+            role="button"
+            tabindex="0"
+            [attr.id]="'accordion-header-' + index"
+            [attr.aria-expanded]="accordionItem.expanded"
+            [attr.aria-controls]="'accordion-body-' + index"
+            (click)="accordionItem.toggle()"
+          >
+            <div class="example-accordion-item-header">
+              <span class="text-xl font-bold">
+                <span class="capitalize">
+                  {{ emploi.startTime }} - {{ emploi.finishTime }} -
+                  {{ emploi.niveau }} {{ emploi.filliere }} (S{{
+                    emploi.semestre
+                  }})
+                </span>
+              </span>
+
+              <div class="action">
+                <button mat-button>
+                  <mat-icon>{{
+                    accordionItem.expanded
+                      ? "keyboard_arrow_up"
+                      : "keyboard_arrow_down "
+                  }}</mat-icon>
+                </button>
+                <span></span>
+
+                <span></span>
+              </div>
+            </div>
+            <div
+              class="example-accordion-item-body text-lg font-normal"
+              role="region"
+              [style.display]="accordionItem.expanded ? '' : 'none'"
+              [attr.id]="'accordion-body-' + index"
+              [attr.aria-labelledby]="'accordion-header-' + index"
+            >
+              <p>
+                <span class="capitalize ordinal font-medium text-xl"
+                  >{{ emploi.matiere }}
+                </span>
+              </p>
+              <p class="ordinal">Type : {{ emploi.type }}</p>
+            </div>
+          </cdk-accordion-item>
+        </cdk-accordion>
+
+        <!-- --------------------------------------------------------------------------------------Mardi------------------- -->
+        <cdk-accordion
+          class="example-accordion border-1 rounded-lg"
+          *ngIf="groupedEmploi?.Mardi"
+        >
+          <div class="flex justify-between w-full">
+            <h2 class="text-xl font-serif font-extrabold py-3 pl-4">Mardi</h2>
+
+            <span class="relative flex h-3 w-3" *ngIf="2 == today">
+              <span
+                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"
+              ></span>
+              <span
+                class="relative inline-flex rounded-full h-3 w-3 bg-green-500"
+              ></span>
+            </span>
+          </div>
+
+          <cdk-accordion-item
+            *ngFor="let emploi of groupedEmploi?.Mardi; let index = index"
+            #accordionItem="cdkAccordionItem"
+            class="example-accordion-item"
+            role="button"
+            tabindex="0"
+            [attr.id]="'accordion-header-' + index"
+            [attr.aria-expanded]="accordionItem.expanded"
+            [attr.aria-controls]="'accordion-body-' + index"
+            (click)="accordionItem.toggle()"
+          >
+            <div class="example-accordion-item-header">
+              <span class="text-xl font-bold">
+                <span class="capitalize">
+                  {{ emploi.startTime }} - {{ emploi.finishTime }} -
+                  {{ emploi.niveau }} {{ emploi.filliere }} (S{{
+                    emploi.semestre
+                  }})
+                </span>
+              </span>
+
+              <div class="action">
+                <button mat-button>
+                  <mat-icon>{{
+                    accordionItem.expanded
+                      ? "keyboard_arrow_up"
+                      : "keyboard_arrow_down "
+                  }}</mat-icon>
+                </button>
+                <span></span>
+
+                <span></span>
+              </div>
+            </div>
+            <div
+              class="example-accordion-item-body text-lg font-normal"
+              role="region"
+              [style.display]="accordionItem.expanded ? '' : 'none'"
+              [attr.id]="'accordion-body-' + index"
+              [attr.aria-labelledby]="'accordion-header-' + index"
+            >
+              <p>
+                <span class="capitalize ordinal font-medium text-xl"
+                  >{{ emploi.matiere }}
+                </span>
+              </p>
+              <p class="ordinal">Type : {{ emploi.type }}</p>
+            </div>
+          </cdk-accordion-item>
+        </cdk-accordion>
+      </div>
+      <div class="lg:flex lg:justify-between lg:items-center">
+        <!-- --------------------------------------------------------------------------------------Mercredi------------------- -->
+        <cdk-accordion
+          class="example-accordion border-1 rounded-lg"
+          *ngIf="groupedEmploi?.Mercredi"
+        >
+          <div class="flex justify-between w-full">
+            <h2 class="text-xl font-serif font-extrabold py-3 pl-4">
+              Mercredi
+            </h2>
+
+            <span class="relative flex h-3 w-3" *ngIf="3 == today">
+              <span
+                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"
+              ></span>
+              <span
+                class="relative inline-flex rounded-full h-3 w-3 bg-green-500"
+              ></span>
+            </span>
+          </div>
+
+          <cdk-accordion-item
+            *ngFor="let emploi of groupedEmploi?.Mercredi; let index = index"
+            #accordionItem="cdkAccordionItem"
+            class="example-accordion-item"
+            role="button"
+            tabindex="0"
+            [attr.id]="'accordion-header-' + index"
+            [attr.aria-expanded]="accordionItem.expanded"
+            [attr.aria-controls]="'accordion-body-' + index"
+            (click)="accordionItem.toggle()"
+          >
+            <div class="example-accordion-item-header">
+              <span class="text-xl font-bold">
+                <span class="capitalize">
+                  {{ emploi.startTime }} - {{ emploi.finishTime }} -
+                  {{ emploi.niveau }} {{ emploi.filliere }} (S{{
+                    emploi.semestre
+                  }})
+                </span>
+              </span>
+
+              <div class="action">
+                <button mat-button>
+                  <mat-icon>{{
+                    accordionItem.expanded
+                      ? "keyboard_arrow_up"
+                      : "keyboard_arrow_down "
+                  }}</mat-icon>
+                </button>
+                <span></span>
+
+                <span></span>
+              </div>
+            </div>
+            <div
+              class="example-accordion-item-body text-lg font-normal"
+              role="region"
+              [style.display]="accordionItem.expanded ? '' : 'none'"
+              [attr.id]="'accordion-body-' + index"
+              [attr.aria-labelledby]="'accordion-header-' + index"
+            >
+              <p>
+                <span class="capitalize ordinal font-medium text-xl"
+                  >{{ emploi.matiere }}
+                </span>
+              </p>
+              <p class="ordinal">Type : {{ emploi.type }}</p>
+            </div>
+          </cdk-accordion-item>
+        </cdk-accordion>
+        <!-- --------------------------------------------------------------------------------------Jeudi------------------- -->
+        <cdk-accordion
+          class="example-accordion border-1 rounded-lg"
+          *ngIf="groupedEmploi?.Jeudi"
+        >
+          <div class="flex justify-between w-full">
+            <h2 class="text-xl font-serif font-extrabold py-3 pl-4">Jeudi</h2>
+
+            <span class="relative flex h-3 w-3" *ngIf="4 == today">
+              <span
+                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"
+              ></span>
+              <span
+                class="relative inline-flex rounded-full h-3 w-3 bg-green-500"
+              ></span>
+            </span>
+          </div>
+
+          <cdk-accordion-item
+            *ngFor="let emploi of groupedEmploi?.Jeudi; let index = index"
+            #accordionItem="cdkAccordionItem"
+            class="example-accordion-item"
+            role="button"
+            tabindex="0"
+            [attr.id]="'accordion-header-' + index"
+            [attr.aria-expanded]="accordionItem.expanded"
+            [attr.aria-controls]="'accordion-body-' + index"
+            (click)="accordionItem.toggle()"
+          >
+            <div class="example-accordion-item-header">
+              <span class="text-xl font-bold">
+                <span class="capitalize">
+                  {{ emploi.startTime }} - {{ emploi.finishTime }} -
+                  {{ emploi.niveau }} {{ emploi.filliere }} (S{{
+                    emploi.semestre
+                  }})
+                </span>
+              </span>
+
+              <div class="action">
+                <button mat-button>
+                  <mat-icon>{{
+                    accordionItem.expanded
+                      ? "keyboard_arrow_up"
+                      : "keyboard_arrow_down "
+                  }}</mat-icon>
+                </button>
+                <span></span>
+
+                <span></span>
+              </div>
+            </div>
+            <div
+              class="example-accordion-item-body text-lg font-normal"
+              role="region"
+              [style.display]="accordionItem.expanded ? '' : 'none'"
+              [attr.id]="'accordion-body-' + index"
+              [attr.aria-labelledby]="'accordion-header-' + index"
+            >
+              <p>
+                <span class="capitalize ordinal font-medium text-xl"
+                  >{{ emploi.matiere }}
+                </span>
+              </p>
+              <p class="ordinal">Type : {{ emploi.type }}</p>
+            </div>
+          </cdk-accordion-item>
+        </cdk-accordion>
+        <!-- --------------------------------------------------------------------------------------Vendredi------------------- -->
+        <cdk-accordion
+          class="example-accordion border-1 rounded-lg"
+          *ngIf="groupedEmploi?.Vendredi"
+        >
+          <div class="flex justify-between w-full">
+            <h2 class="text-xl font-serif font-extrabold py-3 pl-4">
+              Vendredi
+            </h2>
+
+            <span class="relative flex h-3 w-3" *ngIf="5 == today">
+              <span
+                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"
+              ></span>
+              <span
+                class="relative inline-flex rounded-full h-3 w-3 bg-green-500"
+              ></span>
+            </span>
+          </div>
+
+          <cdk-accordion-item
+            *ngFor="let emploi of groupedEmploi?.Vendredi; let index = index"
+            #accordionItem="cdkAccordionItem"
+            class="example-accordion-item"
+            role="button"
+            tabindex="0"
+            [attr.id]="'accordion-header-' + index"
+            [attr.aria-expanded]="accordionItem.expanded"
+            [attr.aria-controls]="'accordion-body-' + index"
+            (click)="accordionItem.toggle()"
+          >
+            <div class="example-accordion-item-header">
+              <span class="text-xl font-bold">
+                <span class="capitalize">
+                  {{ emploi.startTime }} - {{ emploi.finishTime }} -
+                  {{ emploi.niveau }} {{ emploi.filliere }} (S{{
+                    emploi.semestre
+                  }})
+                </span>
+              </span>
+
+              <div class="action">
+                <button mat-button>
+                  <mat-icon>{{
+                    accordionItem.expanded
+                      ? "keyboard_arrow_up"
+                      : "keyboard_arrow_down "
+                  }}</mat-icon>
+                </button>
+                <span></span>
+
+                <span></span>
+              </div>
+            </div>
+            <div
+              class="example-accordion-item-body text-lg font-normal"
+              role="region"
+              [style.display]="accordionItem.expanded ? '' : 'none'"
+              [attr.id]="'accordion-body-' + index"
+              [attr.aria-labelledby]="'accordion-header-' + index"
+            >
+              <p>
+                <span class="capitalize ordinal font-medium text-xl"
+                  >{{ emploi.matiere }}
+                </span>
+              </p>
+              <p class="ordinal">Type : {{ emploi.type }}</p>
+            </div>
+          </cdk-accordion-item>
+        </cdk-accordion>
+      </div>
+      <div class="lg:flex lg:justify-between lg:items-center">
+        <!-- --------------------------------------------------------------------------------------Samedi------------------- -->
+        <cdk-accordion
+          class="example-accordion border-1 rounded-lg"
+          *ngIf="groupedEmploi?.Samedi"
+        >
+          <div class="flex justify-between w-full">
+            <h2 class="text-xl font-serif font-extrabold py-3 pl-4">Samedi</h2>
+
+            <span class="relative flex h-3 w-3" *ngIf="6 == today">
+              <span
+                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"
+              ></span>
+              <span
+                class="relative inline-flex rounded-full h-3 w-3 bg-green-500"
+              ></span>
+            </span>
+          </div>
+
+          <cdk-accordion-item
+            *ngFor="let emploi of groupedEmploi?.Samedi; let index = index"
+            #accordionItem="cdkAccordionItem"
+            class="example-accordion-item"
+            role="button"
+            tabindex="0"
+            [attr.id]="'accordion-header-' + index"
+            [attr.aria-expanded]="accordionItem.expanded"
+            [attr.aria-controls]="'accordion-body-' + index"
+            (click)="accordionItem.toggle()"
+          >
+            <div class="example-accordion-item-header">
+              <span class="text-xl font-bold">
+                <span class="capitalize">
+                  {{ emploi.startTime }} - {{ emploi.finishTime }} -
+                  {{ emploi.niveau }} {{ emploi.filliere }} (S{{
+                    emploi.semestre
+                  }})
+                </span>
+              </span>
+
+              <div class="action">
+                <button mat-button>
+                  <mat-icon>{{
+                    accordionItem.expanded
+                      ? "keyboard_arrow_up"
+                      : "keyboard_arrow_down "
+                  }}</mat-icon>
+                </button>
+                <span></span>
+
+                <span></span>
+              </div>
+            </div>
+            <div
+              class="example-accordion-item-body text-lg font-normal"
+              role="region"
+              [style.display]="accordionItem.expanded ? '' : 'none'"
+              [attr.id]="'accordion-body-' + index"
+              [attr.aria-labelledby]="'accordion-header-' + index"
+            >
+              <p>
+                <span class="capitalize ordinal font-medium text-xl"
+                  >{{ emploi.matiere }}
+                </span>
+              </p>
+              <p class="ordinal">Type : {{ emploi.type }}</p>
+            </div>
+          </cdk-accordion-item>
+        </cdk-accordion>
+      </div>
+      <!-- ------------------------------------------------------------------------------------------ -->
+    </div>
+  </div>
+</div>

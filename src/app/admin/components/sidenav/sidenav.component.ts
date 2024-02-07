@@ -54,8 +54,10 @@ export class SidenavComponent implements OnInit {
   faAngleRight = faAngleRight;
   faAngleDown = faAngleDown;
   multiple: boolean = true;
+  role = localStorage.getItem('role');
   constructor(public router: Router) {}
   ngOnInit(): void {
+    this.role = localStorage.getItem('role');
     this.screenWidth = window.innerWidth;
   }
   @HostListener('window:resize', ['$event'])

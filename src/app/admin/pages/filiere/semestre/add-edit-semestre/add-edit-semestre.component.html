@@ -1,1 +1,54 @@
-<p>add-edit-semestre works!</p>
+<div mat-dialog-title class="border-b">
+  <h1>{{ data ? "Modifier le " : "Ajouter un " }} semestre</h1>
+</div>
+<form [formGroup]="semestreForm" (ngSubmit)="onFormSubmit()">
+  <div mat-dialog-content class="content">
+    <div class="row border-1 rounded-md py-2 px-6">
+      <mat-form-field appearance="outline" class="mt-3">
+        <mat-label>Numéro</mat-label>
+        <mat-select formControlName="numero">
+          <mat-option
+            *ngFor="let semestre of semestreList"
+            [value]="semestre.value"
+            >{{ semestre.name }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="mt-4">
+        <mat-label>Début</mat-label>
+        <input matInput [matDatepicker]="start" formControlName="start" />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="start"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #start></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Début</mat-label>
+        <input matInput [matDatepicker]="finish" formControlName="finish" />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="finish"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #finish></mat-datepicker>
+      </mat-form-field>
+    </div>
+  </div>
+  <div mat-dialog-actions class="action">
+    
+    <button
+      mat-stroked-button
+      class="px-3"
+      type="button"
+      color="warn"
+      [mat-dialog-close]="false"
+    >
+      Annuler
+      <mat-icon>close</mat-icon>
+    </button>
+    <button mat-stroked-button color="primary" class="px-3" type="submit">
+      {{ data ? "Modifier" : "Enregistrer" }}
+      <mat-icon>checked</mat-icon>
+    </button>
+  </div>
+</form>

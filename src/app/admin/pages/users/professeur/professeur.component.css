@@ -40,3 +40,17 @@
     }
   }
 }
+.mat-green {
+  color: green;
+}
+.mat-red {
+  color: red;
+}
+.table {
+  width: 100%;
+  border: 3px solid whitesmoke;
+  border-radius: 10px;
+  th {
+    @apply font-semibold bg-blend-lighten;
+  }
+}

@@ -1,1 +1,75 @@
-<p>navbar works!</p>
+<!-- <mat-toolbar class="bg-white text-blue-950 shadow-md mb-2 px-5 py-10"> -->
+<!--  <a class="text-5xl flex items-center font-black">
+    <span> <mat-icon>fingerprint</mat-icon></span>
+  </a>
+  <div class="spacer"></div>
+  <div
+    class="relative mx-auto flex flex-col sm:flex-row max-w-screen-lg sm:justify-center sm:items-center"
+  >
+    <input type="checkbox" class="peer hidden" id="nav-open" />
+    <label
+      class="cursor-pointer absolute right-0 mt-1 text-xl text-blue-950"
+      for="nav-open"
+      ><mat-icon>menu</mat-icon>
+    </label>
+    <nav class="peer-checked:block hidden mt-4 sm:mt-0">
+      <ul
+        class="flex flex-col gap-y-4 text-blue-600 text-lg sm:flex-row sm:gap-x-8"
+      >
+        <li><a routerLink="login" mat-button>Login</a></li>
+
+        <li><a mat-button routerLink="signup">Sign up</a></li>
+      </ul>
+    </nav>
+  </div> -->
+
+<!-- </mat-toolbar> -->
+
+<nav class="bg-blue-800 shadow-md lg:py-1 lg:px-24 fixed w-100 sm:px-2">
+  <div class="navbar flex justify-between items-center">
+    <a class="text-xl flex items-center font-black text-white">
+      <span> S<mat-icon>fingerprint</mat-icon>N</span>
+    </a>
+    <div class="spacer"></div>
+    <div class="menu hidden md:flex gap-4 text-lg">
+      <a
+        class="hover:text-indigo-500 transition-all duration-300"
+        routerLink="login"
+        mat-button
+        ><span class="hover:text-blue-500 text-white">Login</span></a
+      >
+
+      <a
+        class="text-indigo-500 transition-all duration-300"
+        mat-button
+        routerLink="signup"
+        ><span class="hover:text-blue-600 text-white">Sign up</span></a
+      >
+    </div>
+    <button
+      (click)="toggleCollapse()"
+      class="w-9 h-9 bg-transparent text-white text-3xl rounded-md flex items-center justify-center md:hidden mr-4"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+  <div class="mobile-menu lg:hidden" *ngIf="collapsed">
+    <div class="menu flex flex-col justify-center items-center gap-4 text-lg">
+      <a
+        class="hover:text-indigo-500 transition-all duration-300"
+        routerLink="login"
+        (click)="collapsed = false"
+        mat-button
+        >Login</a
+      >
+
+      <a
+        class="hover:text-indigo-500 transition-all duration-300"
+        mat-button
+        routerLink="signup"
+        (click)="collapsed = false"
+        >Sign up</a
+      >
+    </div>
+  </div>
+</nav>

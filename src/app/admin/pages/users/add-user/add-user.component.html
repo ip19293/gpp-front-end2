@@ -1,0 +1,226 @@
+<!------------------------------------------  Main container ---------------------------- -->
+<div
+  class="container d-flex justify-content-center align-items-center min-vh-100"
+>
+  <!------------------------------------------  logo container ---------------------------- -->
+  <div class="row border rounder-5 p-3 bg-white shadow box-area">
+    <!------------------------------------------  left box ---------------------------- -->
+    <div
+      class="col-md-6 rounder-4 d-flex justify-content-center align-items-center flex-column left-box"
+      style="background-color: #516bba"
+    >
+      <div class="featured-image mb-3">
+        <img
+          src="assets/images/supnum.png"
+          alt=""
+          class="img-fluid border-4"
+          style="width: 250px"
+        />
+        <p
+          class="text-white f-s-2"
+          style="
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: 600;
+          "
+        >
+          Etre Vérifié
+        </p>
+        <small
+          class="text-white text-wrap text-center"
+          style="width: 17rem; font-family: 'Courier New', Courier, monospace"
+          >Rejoignez des designers expérimentés sur cette plateforme</small
+        >
+      </div>
+    </div>
+    <!------------------------------------------  right box ---------------------------- -->
+    <div class="col-md-6 right-box">
+      <div class="row items-center">
+        <div class="header-text mb-1">
+          <h2 class="md:flex-wrap flex justify-center">
+            Enregistrez votre complte gratuit
+          </h2>
+        </div>
+        <!-- ------------------------------------------------------------------------------------------------------------------ -->
+        <mat-stepper
+          class="example-stepper row items-center"
+          [orientation]="(stepperOrientation | async)!"
+          linear
+          #stepper
+        >
+          <mat-step
+            [stepControl]="nomCompletForm"
+            [editable]="isEditable"
+            state="phone"
+          >
+            <form [formGroup]="nomCompletForm">
+              <mat-form-field appearance="outline" class="w-100">
+                <input
+                  matInput
+                  placeholder="Nom"
+                  type="text"
+                  formControlName="nom"
+                  required
+                />
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="w-100">
+                <input
+                  matInput
+                  placeholder="Prénom"
+                  type="text"
+                  formControlName="prenom"
+                  required
+                />
+              </mat-form-field>
+              <div>
+                <button mat-button matStepperNext>Suivant</button>
+              </div>
+            </form>
+          </mat-step>
+          <!-- ---------------------------------------------------------------------------------------Contact Form---------------------- -->
+          <mat-step [stepControl]="contactForm" [editable]="isEditable">
+            <form [formGroup]="contactForm">
+              <mat-form-field appearance="outline" class="w-100">
+                <input
+                  matInput
+                  placeholder="Adresse e-mail"
+                  type="email"
+                  formControlName="email"
+                  required
+                />
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="w-100">
+                <input
+                  matInput
+                  placeholder="Numéro de téléphone"
+                  type="number"
+                  formControlName="mobile"
+                  required
+                />
+              </mat-form-field>
+
+              <div>
+                <button mat-button matStepperPrevious>Previous</button>
+                <button mat-button matStepperNext>Suivant</button>
+              </div>
+            </form>
+          </mat-step>
+          <!-- -------------------------------------------------------------------------------------- Mot de passe Form -------------------->
+          <mat-step [stepControl]="motPasseForm" [editable]="isEditable">
+            <form [formGroup]="motPasseForm">
+              <mat-form-field appearance="outline" class="w-100">
+                <input
+                  matInput
+                  placeholder="Mot de passe"
+                  type="password"
+                  formControlName="password"
+                  required
+                />
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="w-100">
+                <input
+                  matInput
+                  placeholder="Mot de passe confirme"
+                  type="password"
+                  formControlName="passwordConfirm"
+                  required
+                />
+              </mat-form-field>
+
+              <section class="example-section">
+                <label class="example-margin">Role:</label>
+                <mat-radio-group
+                  matNativeControl
+                  formControlName="role"
+                  name="role"
+                  [(ngModel)]="selectedRole"
+                  (change)="role = selectedRole"
+                >
+                  <mat-radio-button class="example-margin" value="professeur"
+                    >Enseignant</mat-radio-button
+                  >
+                  <mat-radio-button class="example-margin" value="responsable"
+                    >Responsable</mat-radio-button
+                  >
+                </mat-radio-group>
+              </section>
+              <div>
+                <div>
+                  <button mat-button matStepperPrevious>Previous</button>
+                  <button
+                    *ngIf="role === 'professeur'"
+                    mat-button
+                    matStepperNext
+                  >
+                    Suivant
+                  </button>
+                  <button
+                    *ngIf="role !== 'professeur'"
+                    mat-button
+                    color="primary"
+                    (click)="signup()"
+                    [disabled]="!motPasseForm.valid"
+                  >
+                    <mat-icon>key</mat-icon>
+                    S'inscrire
+                  </button>
+                </div>
+              </div>
+            </form>
+          </mat-step>
+          <!-- ---------------------------------------------------------------------------banque et account numero----------- -->
+          <mat-step
+            [stepControl]="professeurForm"
+            [editable]="isEditable"
+            *ngIf="role === 'professeur'"
+          >
+            <form [formGroup]="professeurForm">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Numero de compte</mat-label>
+                <input
+                  name="accountNumero"
+                  type="number"
+                  matInput
+                  formControlName="accountNumero"
+                />
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Nom de la banque</mat-label>
+                <mat-select formControlName="banque">
+                  <mat-option
+                    *ngFor="let banque of banques"
+                    value="{{ banque }}"
+                  >
+                    {{ banque }}</mat-option
+                  >
+                </mat-select>
+              </mat-form-field>
+              <div>
+                <div>
+                  <button mat-button matStepperPrevious>Previous</button>
+                  <button
+                    mat-button
+                    color="primary"
+                    (click)="signup()"
+                    [disabled]="!professeurForm.valid"
+                  >
+                    <mat-icon>key</mat-icon>
+                    S'inscrire
+                  </button>
+                </div>
+              </div>
+            </form>
+          </mat-step>
+          <!-- -------------------------------------------------------------------------------------------------- -->
+        </mat-stepper>
+        <div class="row justify-start">
+          <small
+            >Vous avez de compte déja?
+            <a href="#" routerLink="../login">Connectez-vous</a></small
+          >
+        </div>
+        <!-- -------------------------------------------------------------------------------------------- -->
+      </div>
+    </div>
+    <!------------------------------------------  Main container ---------------------------- -->
+  </div>
+</div>

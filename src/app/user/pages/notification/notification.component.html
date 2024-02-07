@@ -1,0 +1,82 @@
+<div class="card">
+  <div class="card-header">
+    <div class="flex w-full justify-between">
+      <h1 class="text-3xl font-extrabold font-mono">Liste de paiements</h1>
+    </div>
+  </div>
+  <div class="card-body">
+    <cdk-accordion class="example-accordion">
+      <cdk-accordion-item
+        *ngFor="let paiement of paiements; let index = index"
+        #accordionItem="cdkAccordionItem"
+        class="example-accordion-item"
+        role="button"
+        tabindex="0"
+        [attr.id]="'accordion-header-' + index"
+        [attr.aria-expanded]="accordionItem.expanded"
+        [attr.aria-controls]="'accordion-body-' + index"
+      >
+        <div class="example-accordion-item-header">
+          <span class="text-xl font-medium"
+            ><button mat-button (click)="accordionItem.toggle()">
+              <span class="">
+                {{ paiement.nbc }} Cours : {{ paiement.fromDate | date }} -
+                {{ paiement.toDate | date }}
+              </span>
+            </button></span
+          >
+          <!--   <span class="example-accordion-item-description">
+            {{ accordionItem.expanded ? "close" : "open" }}
+          </span> -->
+          <div class="action">
+            <button mat-button (click)="accordionItem.toggle()">
+              <mat-icon>{{
+                accordionItem.expanded
+                  ? "keyboard_arrow_up"
+                  : "keyboard_arrow_down "
+              }}</mat-icon>
+            </button>
+            <span></span>
+            <a
+              mat-stroked-button
+              color="warn"
+              (click)="validation($event, paiement._id, { refuse: 'yes' })"
+            >
+              <mat-icon>close</mat-icon>
+            </a>
+            <span></span>
+            <a mat-stroked-button (click)="validation($event, paiement._id)">
+              <mat-icon color="primary">approval</mat-icon>
+              Validez
+            </a>
+          </div>
+        </div>
+        <div
+          class="example-accordion-item-body text-lg font-normal"
+          role="region"
+          [style.display]="accordionItem.expanded ? '' : 'none'"
+          [attr.id]="'accordion-body-' + index"
+          [attr.aria-labelledby]="'accordion-header-' + index"
+        >
+          <p>
+            <span class="capitalize ordinal font-medium text-xl"
+              >{{ paiement.matiere }} </span
+            >{{ paiement.code }}
+          </p>
+
+          <p class="ordinal">Nombre d'heures : {{ paiement.nbh }}</p>
+          <p class="ordinal">Taux horeurs : {{ paiement.th }}</p>
+          <p class="ordinal">Montant : {{ paiement.totalMontant }} UM</p>
+          <p class="ordinal">Confirmation : {{ paiement.confirmation }}</p>
+        </div>
+      </cdk-accordion-item>
+    </cdk-accordion>
+    <div
+      *ngIf="isVide"
+      class="flex w-full bg-blue-50 py-3 rounded-lg text-xl px-10 justify-between"
+    >
+      <p>Votre liste est vide !!!</p>
+      <span><mat-icon color="warn">warning</mat-icon></span>
+    </div>
+  </div>
+</div>

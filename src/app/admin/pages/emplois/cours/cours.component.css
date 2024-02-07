@@ -1,7 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 .head-content-left {
   .search-container {
     position: relative;
-    margin-bottom: 1rem;
+
     .normal-search {
       .search {
         border: none;
@@ -37,7 +40,20 @@
     }
   }
 }
-
+.mat-green {
+  color: green;
+}
+.mat-red {
+  color: red;
+}
+.table {
+  width: 100%;
+  border: 3px solid whitesmoke;
+  border-radius: 10px;
+  th {
+    @apply font-semibold bg-blend-lighten;
+  }
+}
 .mat-green {
   color: green;
 }
@@ -57,7 +73,4 @@
 }
 .mat-oui {
   color: green;
-}
-.mat-pas {
-  color: red;
 }

@@ -180,7 +180,7 @@ export class ProfCoursAddEditComponent implements OnInit {
   }
   onFormSubmit() {
     this.coursForm.value.professeur = this.id;
-    this.coursForm.value.debit = parseInt(this.coursForm.value.debit);
+    //this.coursForm.value.debit = parseInt(this.coursForm.value.debit);
     console.log(this.coursForm.value);
     if (this.coursForm.valid) {
       if (this.data) {

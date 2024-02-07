@@ -1,6 +1,8 @@
 <div class="card">
   <div class="card-head">
-    <h1 class="display-4">Liste de cours - {{ nomComplet | uppercase }}</h1>
+    <h1 class="lg:text-3xl font-extrabold font-mono capitalize">
+      cours - {{ nom }} {{ prenom }}
+    </h1>
   </div>
   <div class="card-body">
     <div class="head-content-left">
@@ -18,13 +20,8 @@
       </div>
     </div>
 
-    <div>
-      <table
-        mat-table
-        [dataSource]="dataSource"
-        matSort
-        class="table table-bordered"
-      >
+    <div class="table">
+      <table mat-table [dataSource]="dataSource" matSort>
         <!-- matiere Column -->
         <ng-container matColumnDef="matiere">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Matière</th>
@@ -47,16 +44,10 @@
             {{ row.date | date }}
           </td>
         </ng-container>
-        <!-- TH Column -->
-        <ng-container matColumnDef="TH">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>TH</th>
-          <td mat-cell *matCellDef="let row">
-            {{ row.TH }}
-          </td>
-        </ng-container>
+
         <!-- debit Column -->
         <ng-container matColumnDef="debit">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Debit</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Début</th>
           <td mat-cell *matCellDef="let row">
             {{ row.startTime }}
           </td>
@@ -70,38 +61,47 @@
         </ng-container>
         <!-- isSigne Column -->
         <ng-container matColumnDef="isSigne">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Signature</th>
-          <td mat-cell *matCellDef="let row">
-            {{ row.isSigned }}
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            class="border-r"
+          >
+            Signature
+          </th>
+          <td mat-cell *matCellDef="let row" class="border-r">
+            <span
+              class="p-1 text-white rounded-lg"
+              [ngClass]="row.isSigned === 'oui' ? 'bg-green-400' : 'bg-red-400'"
+            >
+              {{ row.isSigned }}</span
+            >
           </td>
         </ng-container>
 
         <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
-          <td mat-cell *matCellDef="let row">
-            <button
-              *ngIf="role == 'admin' || role == 'responsable'"
-              mat-icon-button
-              color="primary"
-              (click)="openEditcoursComp(row, row._id)"
-            >
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button
-              *ngIf="role == 'admin' || role == 'responsable'"
-              mat-icon-button
-              color="warn"
-              (click)="deleteCours($event, row._id)"
-            >
-              <mat-icon>delete</mat-icon>
-            </button>
+          <td mat-cell *matCellDef="let row" class="space-x-3">
             <button
               *ngIf="role == 'professeur' || role == 'admin'"
-              mat-icon-button
-              color="{{ row.isSigned }}"
+              mat-flat-button
               (click)="signeCours(row._id)"
             >
-              <mat-icon>done</mat-icon>
+              <mat-icon color="primary">done</mat-icon>
+            </button>
+            <button
+              *ngIf="role == 'admin' || role == 'responsable'"
+              mat-flat-button
+              (click)="openEditcoursComp(row, row._id)"
+            >
+              <mat-icon color="primary">edit</mat-icon>
+            </button>
+            <button
+              *ngIf="role == 'admin' || role == 'responsable'"
+              mat-flat-button
+              (click)="deleteCours($event, row._id)"
+            >
+              <mat-icon color="red">delete</mat-icon>
             </button>
           </td>
         </ng-container>
@@ -122,15 +122,15 @@
         aria-label="Sélectionnez la page des utilisateurs"
       ></mat-paginator>
     </div>
-    <div class="row flex-row justify-content-end">
+    <div class="flex justify-end px-1 py-2 bg-blend-lighten">
       <button
-        mat-button
+        class="flex p-4 rounded-md bg-gray-700 text-white hover:bg-gray-600 shadow"
+        mat-stroked-button
         color="primary"
-        style="width: 30vh; border: 2px solid whitesmoke"
         (click)="openAddcoursComp()"
       >
         <mat-icon>add</mat-icon>
-        Nouvele cour
+        Ajouter
       </button>
     </div>
   </div>

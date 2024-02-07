@@ -13,6 +13,12 @@ import {
   faCalendarDays,
   faSitemap,
   faBookOpenReader,
+  faSignOut,
+  faCogs,
+  faMortarBoard,
+  faUsersBetweenLines,
+  faUsersRectangle,
+  faCalendarCheck,
 } from '@fortawesome/free-solid-svg-icons';
 import { INavbarData } from './helper';
 
@@ -22,88 +28,42 @@ export const navbarData: INavbarData[] = [
     icon: faHome,
     label: 'Dashbord',
   },
-  {
+  /*   {
     routerLink: 'statistics',
     icon: faChartBar,
     label: 'Statistiques',
-  },
+  }, */
   {
     routerLink: 'users',
     icon: faUsersGear,
     label: 'Utilisateurs',
-    items: [
-      {
-        routerLink: 'users',
-        label: 'Liste enregistré',
-      },
-      {
-        routerLink: 'users/add-edit',
-        label: 'Ajouter un(e) ',
-      },
-      {
-        routerLink: 'professeurs',
-        label: 'Enseignants',
-        items: [
-          {
-            routerLink: 'professeurs',
-            label: 'Liste enregistré',
-          },
-          {
-            routerLink: 'professeurs/add-edit',
-            label: 'Ajouter un(e)',
-          },
-        ],
-      },
-    ],
   },
+  {
+    icon: faUsersRectangle,
+    routerLink: 'professeurs',
+    label: 'Enseignants',
+  },
+
   {
     routerLink: 'categorie',
     icon: faShapes,
     label: 'Catégories',
     items: [
-      { routerLink: 'categorie', label: 'Liste enregistré' },
-      { routerLink: 'categorie/add-edit', label: 'Ajouter une' },
-      {
-        routerLink: 'matiere',
-        label: 'Matières',
-        items: [
-          { routerLink: 'matiere', label: 'Liste enregistré' },
-          { routerLink: 'matiere/add-edit', label: 'Ajouter une' },
-        ],
-      },
+      { routerLink: 'categorie', label: 'Catégories' },
+      { routerLink: 'matiere', label: 'Matières' },
     ],
   },
   {
     routerLink: 'filieres',
     icon: faBookOpenReader,
     label: 'Filières',
-    items: [
-      { routerLink: 'filieres', label: 'Liste enregistré' },
-      { routerLink: 'filieres/add-edit', label: 'Ajouter une' },
-      {
-        routerLink: 'filieres',
-        label: 'Semestres',
-        items: [
-          { routerLink: 'semestres', label: 'Liste enregistré' },
-          { routerLink: 'semestres/add-edit', label: 'Ajouter un' },
-        ],
-      },
-      {
-        routerLink: 'groupes',
-        label: 'Groupes',
-        items: [
-          { routerLink: 'groupes', label: 'Liste enregistré' },
-          { routerLink: 'groupes/add-edit', label: 'Ajouter un' },
-        ],
-      },
-    ],
   },
 
   {
-    routerLink: 'emploi',
+    routerLink: 'emplois',
     icon: faCalendarDays,
     label: 'Emploi du temps',
-    items: [
+    /*    items: [
       { routerLink: 'emplois', label: 'Liste enregistré' },
       { routerLink: 'emplois/add-edit', label: 'Ajouter un' },
       {
@@ -115,21 +75,22 @@ export const navbarData: INavbarData[] = [
           { routerLink: 'cours/list-non-signe', label: 'Nouvel cours' },
         ],
       },
-    ],
+    ], */
   },
+  { routerLink: 'cours', icon: faCalendarCheck, label: 'Cours' },
   {
     routerLink: 'paiement',
     icon: faHandHoldingDollar,
     label: 'Paiement',
-    items: [
+    /*     items: [
       { routerLink: 'paiement', label: 'Les cotisations des enseignants' },
       { routerLink: 'paiement/liste-cree', label: 'Liste enregistré' },
       { routerLink: 'paiement/liste-termine', label: 'Liste terminé' },
       { routerLink: 'paiement/liste-valide', label: 'Liste validé' },
       { routerLink: 'paiement/liste-refuse', label: 'Liste refusé' },
-    ],
+    ], */
   },
-  {
+  /*   {
     routerLink: 'settings',
     icon: faGear,
     label: 'Paramètres',
@@ -144,5 +105,5 @@ export const navbarData: INavbarData[] = [
         label: 'Personnaliser',
       },
     ],
-  },
+  }, */
 ];

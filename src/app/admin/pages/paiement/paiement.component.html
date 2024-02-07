@@ -1,6 +1,8 @@
 <div class="card">
   <div class="card-head">
-    <h1 class="display-4">Les cotisations des enseignants - Paiement</h1>
+    <h1 class="lg:text-2xl lg:font-semibold md:text-sm">
+      Liste enregistré - Paiement
+    </h1>
   </div>
   <div class="card-body">
     <div class="head-content-left">
@@ -19,16 +21,59 @@
       </div>
     </div>
 
-    <div>
-      <table
-        mat-table
-        [dataSource]="dataSource"
-        matSort
-        class="table table-bordered"
-      >
+    <div class="table">
+      <table mat-table [dataSource]="dataSource" matSort>
+        <!-- date Column -->
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.date | date }}
+          </td>
+        </ng-container>
+
+        <!-- status Column -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+          <td mat-cell *matCellDef="let row">
+            <span
+              class="px-2 rounded-md"
+              [ngClass]="
+                row.status === 'initialisé'
+                  ? ' bg-slate-500 text-white'
+                  : '' || row.status === 'validé'
+                  ? 'bg-green-600 text-white'
+                  : 'bg-blue-600 text-white'
+              "
+            >
+              {{ row.status }}
+            </span>
+          </td>
+        </ng-container>
+        <!-- confirmation Column -->
+        <ng-container matColumnDef="confirmation">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Confirmation
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <span
+              class="px-2 rounded-md"
+              [ngClass]="
+                row.confirmation === 'accepté'
+                  ? 'bg-green-600 text-white'
+                  : '' || row.confirmation === 'vide'
+                  ? ' bg-slate-500 text-white'
+                  : 'bg-red-600 text-white'
+              "
+            >
+              <strong> {{ row.confirmation }}</strong>
+            </span>
+          </td>
+        </ng-container>
         <!-- professeur Column -->
         <ng-container matColumnDef="professeur">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Enseignant</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Enseignant(e)
+          </th>
           <td mat-cell *matCellDef="let row">
             {{ row.nomComplet | uppercase }}
           </td>
@@ -42,32 +87,27 @@
             {{ row.nbc }}
           </td>
         </ng-container>
-        <!-- nbh Column -->
-        <ng-container matColumnDef="nbh">
+        <!-- th Column -->
+        <ng-container matColumnDef="th">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>
-            Volume horaire
+            Heures de travail
           </th>
-          <td mat-cell *matCellDef="let row">{{ row.nbh }}</td>
+          <td mat-cell *matCellDef="let row">{{ row.th }}/{{ row.nbh }}</td>
         </ng-container>
+
         <!-- somme Column -->
         <ng-container matColumnDef="somme">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>
-            Montant(MRU)
-          </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Montant(UM)</th>
           <td mat-cell *matCellDef="let row">
-            {{ row.somme }}
+            {{ row.totalMontant }}
           </td>
         </ng-container>
         <!-- action Column -->
         <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>action</th>
           <td mat-cell *matCellDef="let row">
-            <button
-              mat-icon-button
-              color="primary"
-              routerLink="./{{ row._id }}"
-            >
-              <mat-icon>account_balance</mat-icon>
+            <button mat-flat-button (click)="deletePaiement($event, row._id)">
+              <mat-icon color="red">delete</mat-icon>
             </button>
           </td>
         </ng-container>

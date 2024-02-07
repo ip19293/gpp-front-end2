@@ -1,3 +1,6 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 .head-content-left {
   .search-container {
     position: relative;
@@ -35,5 +38,31 @@
     .search-menu-btn:focus {
       color: #699dfa;
     }
+  }
+}
+
+.mat-green {
+  color: green;
+}
+.mat-red {
+  color: red;
+}
+.badge-error {
+  background-color: red;
+  color: white;
+}
+.badge-success {
+  background-color: green;
+  color: white;
+}
+.table-bordered {
+  border: 1px solid #74788d;
+}
+.table {
+  width: 100%;
+  border: 3px solid whitesmoke;
+  border-radius: 10px;
+  th {
+    @apply font-semibold bg-blend-lighten;
   }
 }

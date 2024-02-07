@@ -1,0 +1,143 @@
+<div
+  mat-dialog-title
+  class="border-1 flex justify-start align-items-center py-3"
+>
+  <h1>{{ data ? "Modifier l'" : "Ajouter un " }} élément</h1>
+</div>
+<form [formGroup]="elementForm" (ngSubmit)="onFormSubmit()">
+  <div mat-dialog-content class="content">
+    <div class="row border-1 rounded-md py-2 px-6">
+      <mat-form-field appearance="outline" class="mt-3">
+        <mat-label>Semestre</mat-label>
+        <mat-select formControlName="semestre">
+          <mat-option
+            *ngFor="let semestre of semestreList"
+            [value]="semestre.value"
+            >{{ semestre.name }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Categorie</mat-label>
+        <select matNativeControl name="categorie" formControlName="categorie">
+          <option
+            *ngFor="let categorie of categories"
+            value="{{ categorie._id }}"
+          >
+            {{ categorie.name }}
+          </option>
+        </select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Matiere</mat-label>
+        <select matNativeControl name="matiere" formControlName="matiere">
+          <option selected value=""></option>
+          <option *ngFor="let matiere of matieres" value="{{ matiere._id }}">
+            {{ matiere.name }}
+          </option>
+        </select>
+      </mat-form-field>
+      <div class="CM">
+        <mat-form-field appearance="outline" class="not-fill">
+          <mat-label>Professeur CM</mat-label>
+          <select
+            matNativeControl
+            name="professeurCM"
+            formControlName="professeurCM"
+          >
+            <option selected value=""></option>
+            <option
+              *ngFor="let professeur of professeurs"
+              value="{{ professeur._id }}"
+            >
+              {{ professeur.nom }} {{ professeur.prenom }}
+            </option>
+          </select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="not-fill">
+          <mat-label>heures CM</mat-label>
+          <input
+            name="heuresCM"
+            type="number"
+            matInput
+            formControlName="heuresCM"
+            placeholder="heures CM"
+          />
+        </mat-form-field>
+      </div>
+      <div class="TP">
+        <mat-form-field appearance="outline" class="not-fill">
+          <mat-label>Professeur TP</mat-label>
+          <select
+            matNativeControl
+            name="professeurTP"
+            formControlName="professeurTP"
+          >
+            <option selected value=""></option>
+            <option
+              *ngFor="let professeur of professeurs"
+              value="{{ professeur._id }}"
+            >
+              {{ professeur.nom }} {{ professeur.prenom }}
+            </option>
+          </select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="not-fill">
+          <mat-label>heures TP</mat-label>
+          <input
+            name="heuresTP"
+            type="number"
+            matInput
+            formControlName="heuresTP"
+            placeholder="heures TP"
+          />
+        </mat-form-field>
+      </div>
+      <div class="TD">
+        <mat-form-field appearance="outline" class="not-fill">
+          <mat-label>Professeur TD</mat-label>
+          <select
+            matNativeControl
+            name="professeurTD"
+            formControlName="professeurTD"
+          >
+            <option selected value=""></option>
+            <option
+              *ngFor="let professeur of professeurs"
+              value="{{ professeur._id }}"
+            >
+              {{ professeur.nom }} {{ professeur.prenom }}
+            </option>
+          </select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="not-fill">
+          <mat-label>heures TD</mat-label>
+          <input
+            name="heuresTD"
+            type="number"
+            matInput
+            formControlName="heuresTD"
+            placeholder="heures TD"
+          />
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions class="action">
+    <button
+      mat-stroked-button
+      class="px-3"
+      type="button"
+      color="warn"
+      [mat-dialog-close]="false"
+    >
+      Annuler
+      <mat-icon>close</mat-icon>
+    </button>
+    <button mat-stroked-button color="primary" class="px-3" type="submit">
+      {{ data ? "Modifier" : "Enregistrer" }}
+      <mat-icon>checked</mat-icon>
+    </button>
+  </div>
+</form>

@@ -28,6 +28,11 @@ export class EmploiService {
       headers: this._headers,
     });
   }
+  getEmploisProfesseurById(id: string): Observable<any> {
+    return this.http.get(this.URL_F + `/${id}/professeur`, {
+      headers: this._headers,
+    });
+  }
 
   deleteEmploi(id: string): Observable<any> {
     return this.http.delete(this.URL_F + `/${id}`, {

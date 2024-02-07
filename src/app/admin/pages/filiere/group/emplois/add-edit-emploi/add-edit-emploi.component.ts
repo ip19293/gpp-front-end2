@@ -179,29 +179,19 @@ export class AddEditEmploiComponent implements OnInit {
         _id: data.id,
         startTime: data.startTime,
         dayNumero: data.day,
-        professeur: data.professeur_id,
-        matiere: data.matiere_id,
+        element: data.element,
         type: data.type,
       };
     }
     this.emploiForm = this.builder.group({
-      dayNumero: this.builder.control(0, Validators.required),
-      professeur: this.builder.control('', Validators.required),
-      matiere: this.builder.control('', Validators.required),
+      dayNumero: this.builder.control('', Validators.required),
+      element: this.builder.control('', Validators.required),
       type: this.builder.control('', Validators.required),
       nbh: this.builder.control(1.5, Validators.required),
       group: this.builder.control(this.id, Validators.required),
       startTime: this.builder.control('', Validators.required),
     });
     this.getElements();
-    this.emploiForm.get('matiere')?.valueChanges.subscribe(async (res: any) => {
-      if (res != '') {
-        this.service_matiere.getProfOfMatieres(res).subscribe((res) => {
-          this.professeurs = res.professeurs;
-          this.cd.detectChanges();
-        });
-      }
-    });
   }
   onFormSubmit() {
     //console.log(this.data);

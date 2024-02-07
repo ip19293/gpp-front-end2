@@ -26,10 +26,7 @@ export class AddEditFiliereComponent implements OnInit {
           .updateFilliere(this.data._id, this.filliereForm.value)
           .subscribe({
             next: (val: any) => {
-              this.toastr.success(
-                `the filliere has been updated successfully ...`,
-                `${val.status} `
-              );
+              this.toastr.success(`${val.message}`, `${val.status} `);
               this._dialog.close(true);
             },
             error: (err: any) => {
@@ -51,10 +48,7 @@ export class AddEditFiliereComponent implements OnInit {
       } else {
         this.service.addFilliere(this.filliereForm.value).subscribe({
           next: (val: any) => {
-            this.toastr.success(
-              `The filliere with name ${val.filliere.name} has been added successfully ...`,
-              `${val.status} `
-            );
+            this.toastr.success(`${val.message}`, `${val.status} `);
             this._dialog.close(true);
           },
           error: (err: any) => {

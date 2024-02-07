@@ -1,0 +1,65 @@
+<mat-toolbar class="mat-elevation-z3">
+  <button mat-icon-button (click)="collapsed = !collapsed">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <div class="spacer"></div>
+  <app-header></app-header>
+</mat-toolbar>
+<mat-drawer-container autosize class="example-container">
+  <mat-drawer
+    mode="side"
+    opened
+    #drawer
+    [style.width]="this.collapsed ? '65px' : '250px'"
+  >
+    <div
+      class="sidnav-header flex flex-col justify-center items-center"
+      [style.width]="this.collapsed ? '65px' : '250px'"
+    >
+      <img
+        [style.width]="this.collapsed ? '32px' : '100px'"
+        [style.height]="this.collapsed ? '32px' : '100px'"
+        src="assets/flag/user.jpg"
+      />
+      <div class="header-text" [class.hide-header-text]="this.collapsed">
+        <h2 class="capitalize antialiased font-semibold">
+          {{ user_info[1] }} {{ user_info[2] }}
+        </h2>
+      </div>
+    </div>
+    <mat-nav-list>
+      <a
+        class="menu-item"
+        mat-list-item
+        *ngFor="let item of menuItems"
+        [style.border-radius]="this.collapsed ? '50%' : '6%'"
+        routerLink="{{ item.routerLink }}"
+        routerLinkActive="selected-menu-item"
+        #rla="routerLinkActive"
+        [activated]="rla.isActive"
+      >
+        <mat-icon
+          matListItemIcon
+          [fontSet]="
+            rla.isActive ? 'material-icons' : 'material-icons-outlined'
+          "
+          >{{ item.icon }}</mat-icon
+        ><span matListItemTitle *ngIf="!this.collapsed">{{ item.label }}</span>
+      </a>
+
+      <!-- <a mat-list-item>
+        <mat-icon matListItemIcon >analytics</mat-icon
+        ><span matListItemTitle *ngIf="!this.collapsed">Analytics</span>
+      </a> -->
+    </mat-nav-list>
+  </mat-drawer>
+  <mat-drawer-content
+    [style.margin-left]="this.collapsed ? '65px' : '250px'"
+    class="content"
+    [style.width]="
+      this.collapsed ? 'calc(100vw - 65px)' : 'calc(100vw - 250px)'
+    "
+  >
+    <app-body></app-body>
+  </mat-drawer-content>
+</mat-drawer-container>

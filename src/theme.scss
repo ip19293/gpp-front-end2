@@ -1,0 +1,107 @@
+@use "@angular/material" as mat;
+
+@include mat.core();
+
+$indigo-palette: (
+  50: #e8eaf6,
+  100: #c5cae9,
+  200: #9fa8da,
+  300: #7986cb,
+  400: #42a5f5,
+  500: #3f51b5,
+  600: #3949ab,
+  700: #303f9f,
+  800: #283593,
+  900: #1a237e,
+  A100: #8c9eff,
+  A200: #536dfe,
+  A400: #3d5afe,
+  A700: #304ffe,
+  // ... continues to 900
+  contrast:
+    (
+      50: rgba(black, 0.87),
+      100: rgba(black, 0.87),
+      200: rgba(black, 0.87),
+      300: rgba(white, 0.87),
+      400: rgba(white, 0.87),
+      500: rgba(white, 0.87),
+      600: rgba(white, 0.87),
+      700: rgba(white, 0.87),
+      800: rgba(white, 0.87),
+      900: rgba(white, 0.87),
+      A100: rgba(black, 0.87),
+      A200: rgba(white, 0.87),
+      A400: rgba(white, 0.87),
+      A700: rgba(white, 0.87),
+      // ... continues to 900
+    ),
+);
+/* $pink-palette: (
+ 50: #FCE4EC,
+ 100: #F8BBD0,
+ 200: #F48FB1,
+ 300: #F06292,
+ 400:#EC407A,
+500:#E91E63,
+600:#D81B60,
+700:#C2185B,
+800:#AD1457,
+900:#880E4F,
+A100:#FF80AB,
+A200:#FF4081,
+A400:#F50057,
+A700:#C51162,
+ // ... continues to 900
+ contrast: (
+   50: rgba(black, 0.87),
+   100: rgba(black, 0.87),
+   200: rgba(black, 0.87),
+   300:rgba(black,0.87) ,
+   400:rgba(white,0.87) ,
+   500:rgba(white,0.87) ,
+   600:rgba(white,0.87) ,
+   700:rgba(white,0.87) ,
+   800:rgba(white,0.87) ,
+   900:rgba(white,0.87) ,
+     A100: rgba(black, 0.87),
+        A200:rgba(white,0.87) ,
+        A400:rgba(white,0.87) ,
+        A700:rgba(white,0.87) ,
+   // ... continues to 900
+ )
+); */
+
+$my-primary: mat.define-palette(mat.$green-palette, A400);
+$my-lem: mat.define-palette(mat.$teal-palette, A200);
+$my-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+// The "warn" palette is optional and defaults to red if not specified.
+$my-warn: mat.define-palette(mat.$red-palette);
+
+$my-theme-primary: mat.define-light-theme(
+  (
+    color: (
+      primary: $my-primary,
+      accent: $my-accent,
+      warn: $my-warn,
+      lem: $my-lem,
+    ),
+    density: 0,
+  )
+);
+$my-theme-lem: mat.define-light-theme(
+  (
+    color: (
+      primary: $my-lem,
+      accent: $my-accent,
+      warn: $my-warn,
+      lem: $my-primary,
+    ),
+    density: 0,
+  )
+);
+
+@include mat.list-theme($my-theme-primary);
+@include mat.icon-theme($my-theme-primary);
+@include mat.badge-theme($my-theme-primary);

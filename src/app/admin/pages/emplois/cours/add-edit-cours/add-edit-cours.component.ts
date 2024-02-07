@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { CategorieService } from 'src/app/admin/services/categorie.service';
 import { CoursService } from 'src/app/admin/services/cours.service';
+import { ElementService } from 'src/app/admin/services/element.service';
 import { MatiereService } from 'src/app/admin/services/matiere.service';
 import { ProfesseurService } from 'src/app/admin/services/professeur.service';
 
@@ -14,14 +15,15 @@ import { ProfesseurService } from 'src/app/admin/services/professeur.service';
 })
 export class AddEditCoursComponent implements OnInit {
   coursForm!: FormGroup;
-  categories: any;
-  categorie: any;
-  categorieSelected: any;
+  elements: any;
+  groupes: any;
+  professeurSelected: any;
   professeurs: any;
   matieres: any;
   matiere: any;
   debit_cours: any;
   matiereSelected: any;
+  elementSelected: any;
   data2: any;
   CM: any;
   TP: any;
@@ -30,7 +32,7 @@ export class AddEditCoursComponent implements OnInit {
     private builder: FormBuilder,
     private service: CoursService,
     private _dialog: MatDialogRef<AddEditCoursComponent>,
-    private service_categorie: CategorieService,
+    private service_element: ElementService,
     private service_professeur: ProfesseurService,
     private service_matiere: MatiereService,
     private toastr: ToastrService,
@@ -167,42 +169,50 @@ export class AddEditCoursComponent implements OnInit {
         startTime: data.startTime,
         isPaid: data.isPaid,
         isSigne: data.isSigne,
+        element: data.element,
         professeur: data.professeur_id,
         matiere: data.matiere_id,
         categorie: data.categorie_id,
         type: data.type,
         nbh: data.nbh,
+        group: data.group,
       };
     }
     this.coursForm = this.builder.group({
       date: this.builder.control('', Validators.required),
       professeur: this.builder.control('', Validators.required),
       matiere: this.builder.control('', Validators.required),
-      categorie: this.builder.control('', Validators.required),
+      element: this.builder.control('', Validators.required),
       type: this.builder.control('', Validators.required),
       nbh: this.builder.control(1.5, Validators.required),
       startTime: this.builder.control('', Validators.required),
     });
     this.coursForm.get('matiere')?.valueChanges.subscribe(async (res: any) => {
       if (res != '') {
-        this.service_matiere.getProfOfMatieres(res).subscribe((res) => {
-          this.professeurs = res.professeurs;
+        this.service_matiere.getElementsByMatiereId(res).subscribe((res) => {
+          this.elements = res.elements;
           this.cd.detectChanges();
         });
       }
     });
     this.coursForm
-      .get('categorie')
+      .get('professeur')
       ?.valueChanges.subscribe(async (res: any) => {
         if (res != '') {
-          this.service_categorie
-            .getCategorieMatieres(res)
-            .subscribe((res: any) => {
-              this.matieres = res.matieres;
-              this.cd.detectChanges();
-            });
+          this.service_professeur.getProfesseur(res).subscribe((res: any) => {
+            this.matieres = res.matieres;
+            this.cd.detectChanges();
+          });
         }
       });
+    /*    this.coursForm.get('element')?.valueChanges.subscribe(async (res: any) => {
+      if (res != '') {
+        this.service_element.getGroupsByElementId(res).subscribe((res: any) => {
+          this.groupes = res.groupes;
+          this.cd.detectChanges();
+        });
+      }
+    }); */
   }
   onFormSubmit() {
     console.log(this.coursForm.value);
@@ -213,7 +223,7 @@ export class AddEditCoursComponent implements OnInit {
           .updateCours(this.data._id, this.coursForm.value)
           .subscribe({
             next: (val: any) => {
-              this.toastr.success(`cours update success`, `${val.status}`);
+              this.toastr.success(`${val.message}`, `${val.status}`);
               this._dialog.close(true);
             },
             error: (err: any) => {
@@ -238,21 +248,26 @@ export class AddEditCoursComponent implements OnInit {
     }
   }
 
-  getCategorie() {
+  /*  getCategorie() {
     this.service_categorie.getAllCategories().subscribe((res: any) => {
       this.categories = res.categories;
     });
+  } */
+  getProfesseurs() {
+    this.service_professeur.getAllProfesseurs().subscribe((res: any) => {
+      this.professeurs = res.professeurs;
+    });
   }
-  getMatieres() {
+  /*  getMatieres() {
     this.service_matiere.getAllMatieres().subscribe((res: any) => {
       this.matieres = res.matieres;
     });
-  }
+  } */
 
-  onCategorieSelected(categorieSelected: any) {
-    if (this.categorieSelected != null) {
-      this.service_categorie
-        .getCategorieMatieres(this.categorieSelected)
+  onprofesseurSelected(professeurSelected: any) {
+    if (this.professeurSelected != null) {
+      this.service_professeur
+        .getProfesseur(this.professeurSelected)
         .subscribe((res: any) => {
           this.matieres = res.matieres;
         });
@@ -261,14 +276,23 @@ export class AddEditCoursComponent implements OnInit {
   onMatiereSelected(matiereSelected: any) {
     if (this.matiereSelected != null) {
       this.service_matiere
-        .getProfOfMatieres(this.matiereSelected)
+        .getElementsByMatiereId(this.matiereSelected)
         .subscribe((res) => {
-          this.professeurs = res.professeurs;
+          this.elements = res.elements;
+        });
+    }
+  }
+  onElementSelected(elementSelected: any) {
+    if (this.elementSelected != null) {
+      this.service_element
+        .getGroupsByElementId(this.elementSelected)
+        .subscribe((res) => {
+          this.groupes = res.groupes;
         });
     }
   }
   ngOnInit(): void {
-    this.getCategorie();
+    this.getProfesseurs();
     this.coursForm.patchValue(this.data2);
   }
 }

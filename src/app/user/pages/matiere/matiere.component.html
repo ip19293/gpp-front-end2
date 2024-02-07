@@ -1,0 +1,76 @@
+<div class="card">
+  <div class="card-header">
+    <div class="flex w-full justify-between">
+      <h1 class="text-3xl font-extrabold font-mono">Liste de Matiéres</h1>
+      <a
+        mat-flat-button
+        (click)="openAddMatiereComp()"
+        color="primary"
+        class="px-2 rounded-xl"
+      >
+        <mat-icon>add</mat-icon>Ajouter
+      </a>
+    </div>
+  </div>
+  <div class="card-body">
+    <cdk-accordion class="example-accordion">
+      <cdk-accordion-item
+        *ngFor="let matiere of matieres; let index = index"
+        #accordionItem="cdkAccordionItem"
+        class="example-accordion-item"
+        role="button"
+        tabindex="0"
+        [attr.id]="'accordion-header-' + index"
+        [attr.aria-expanded]="accordionItem.expanded"
+        [attr.aria-controls]="'accordion-body-' + index"
+      >
+        <div class="example-accordion-item-header">
+          <span class="text-xl font-medium"
+            ><button mat-button (click)="accordionItem.toggle()">
+              <span class="capitalize">{{ matiere.name }}</span>
+            </button></span
+          >
+        
+          <div class="action">
+            <button mat-button (click)="accordionItem.toggle()">
+              <mat-icon>{{
+                accordionItem.expanded
+                  ? "keyboard_arrow_up"
+                  : "keyboard_arrow_down "
+              }}</mat-icon>
+            </button>
+            <span></span>
+            <button mat-button (click)="deleteMatiere($event, matiere._id)">
+              <mat-icon color="warn">delete</mat-icon>
+            </button>
+            <span></span>
+            <button mat-button (click)="accordionItem.toggle()">
+              <mat-icon color="primary">edit</mat-icon>
+            </button>
+          </div>
+        </div>
+        <div
+          class="example-accordion-item-body text-sm font-normal"
+          role="region"
+          [style.display]="accordionItem.expanded ? '' : 'none'"
+          [attr.id]="'accordion-body-' + index"
+          [attr.aria-labelledby]="'accordion-header-' + index"
+        >
+          <p>
+            Catégorie :
+            <span class="capitalize ordinal">{{ matiere.categorie }} </span
+            >{{ matiere.code }}
+          </p>
+          <p class="ordinal">Prix : {{ matiere.prix }} UM</p>
+        </div>
+      </cdk-accordion-item>
+    </cdk-accordion>
+    <div
+      *ngIf="isVide"
+      class="flex w-full bg-blue-50 py-3 rounded-lg text-xl px-10 justify-between"
+    >
+      <p>Votre liste est vide !!!</p>
+      <span><mat-icon color="warn">warning</mat-icon></span>
+    </div>
+  </div>
+</div>

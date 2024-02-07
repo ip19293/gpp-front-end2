@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .head-content-left {
   .search-container {
     position: relative;
@@ -36,4 +40,18 @@
       color: #699dfa;
     }
   }
+}
+.table {
+  width: 100%;
+  border: 3px solid whitesmoke;
+  border-radius: 10px;
+  th {
+    @apply font-semibold bg-blend-lighten;
+  }
+}
+.mat-green {
+  color: green;
+}
+.mat-red {
+  color: red;
 }
