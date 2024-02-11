@@ -24,7 +24,6 @@ export class AddEditCoursComponent implements OnInit {
   debit_cours: any;
   matiereSelected: any;
   elementSelected: any;
-  data2: any;
   CM: any;
   TP: any;
   TD: any;
@@ -162,22 +161,7 @@ export class AddEditCoursComponent implements OnInit {
         value: '17:45',
       },
     ];
-    if (data != null) {
-      this.data2 = {
-        _id: data._id,
-        date: data.date,
-        startTime: data.startTime,
-        isPaid: data.isPaid,
-        isSigne: data.isSigne,
-        element: data.element,
-        professeur: data.professeur_id,
-        matiere: data.matiere_id,
-        categorie: data.categorie_id,
-        type: data.type,
-        nbh: data.nbh,
-        group: data.group,
-      };
-    }
+
     this.coursForm = this.builder.group({
       date: this.builder.control('', Validators.required),
       professeur: this.builder.control('', Validators.required),
@@ -293,6 +277,6 @@ export class AddEditCoursComponent implements OnInit {
   }
   ngOnInit(): void {
     this.getProfesseurs();
-    this.coursForm.patchValue(this.data2);
+    this.coursForm.patchValue(this.data);
   }
 }

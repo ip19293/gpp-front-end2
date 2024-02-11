@@ -19,7 +19,9 @@ export class FiliereService {
     });
   }
   addFilliere(data: any): Observable<any> {
-    return this.http.post(this.URL_F, data);
+    return this.http.post(this.URL_F, data, {
+      headers: this._headers,
+    });
   }
   getFilliereById(id: string): Observable<any> {
     return this.http.get(this.URL_F + `/${id}`);

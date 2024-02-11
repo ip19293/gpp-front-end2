@@ -82,13 +82,10 @@ export const navbarData: INavbarData[] = [
     routerLink: 'paiement',
     icon: faHandHoldingDollar,
     label: 'Paiement',
-    /*     items: [
+    items: [
       { routerLink: 'paiement', label: 'Les cotisations des enseignants' },
-      { routerLink: 'paiement/liste-cree', label: 'Liste enregistré' },
-      { routerLink: 'paiement/liste-termine', label: 'Liste terminé' },
-      { routerLink: 'paiement/liste-valide', label: 'Liste validé' },
-      { routerLink: 'paiement/liste-refuse', label: 'Liste refusé' },
-    ], */
+      { routerLink: 'paiement/liste-cree', label: 'Paiements' },
+    ],
   },
   /*   {
     routerLink: 'settings',

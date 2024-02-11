@@ -64,11 +64,25 @@ export class ProfesseurComponent implements OnInit {
     ) {
       this.fileIsSelected = true;
       this.file = file;
+      const formdata = new FormData();
+      formdata.append('file', this.file);
+      this.service.uploadProfesseurs(formdata).subscribe({
+        next: (res) => {
+          this.toastr.success(`${res.message}`, `${res.status}`);
+          this.getProfesseurs();
+        },
+        error: (err) => {
+          this.toastr.error(`${err.error.message}`, 'failed');
+        },
+      });
     } else {
       this.toastr.error(
         `Le type de fichier sélectionné doit ètre xlsx`,
         'échec'
       );
+      this.selectedFileName = null;
+      this.file = null;
+      this.fileIsSelected = false;
     }
     // debugger;
   }

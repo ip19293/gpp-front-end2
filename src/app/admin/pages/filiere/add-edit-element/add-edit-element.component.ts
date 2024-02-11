@@ -46,6 +46,19 @@ export class AddEditElementComponent implements OnInit {
     private active: ActivatedRoute,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
+    if (data) {
+      this.data2 = {
+        categorie: data.info.categorie,
+        matiere: data.matiere,
+        semestre: data.semestre,
+        professeurCM: data.professeurCM,
+        professeurTP: data.professeurTP,
+        professeurTD: data.professeurTD,
+        heuresCM: data.heuresCM,
+        heuresTP: data.heuresTP,
+        heuresTD: data.heuresTD,
+      };
+    }
     this.elementForm = this.builder.group({
       filiere: this.builder.control(''),
       semestre: this.builder.control('', Validators.required),
@@ -145,6 +158,6 @@ export class AddEditElementComponent implements OnInit {
   }
   ngOnInit(): void {
     this.getCategorie();
-    this.elementForm.patchValue(this.data);
+    this.elementForm.patchValue(this.data2);
   }
 }

@@ -76,11 +76,25 @@ export class FiliereDetailComponent implements OnInit {
     ) {
       this.fileIsSelected = true;
       this.file = file;
+      const formdata = new FormData();
+      formdata.append('file', this.file);
+      this.service.uploadElements(this.id, formdata).subscribe({
+        next: (res) => {
+          this.toastr.success(`${res.message}`, `${res.status}`);
+          this.getElementsByfiliereId();
+        },
+        error: (err) => {
+          this.toastr.error(`${err.error.message}`, 'failed');
+        },
+      });
     } else {
       this.toastr.error(
         `Le type de fichier sélectionné doit ètre xlsx`,
         'échec'
       );
+      this.selectedFileName = null;
+      this.file = null;
+      this.fileIsSelected = false;
     }
     // debugger;
   }
@@ -108,6 +122,8 @@ export class FiliereDetailComponent implements OnInit {
       this.filiere = res.filiere;
       this.niveau = res.niveau;
       this.paginator._intl.itemsPerPageLabel = "Nombre d'eléments par page";
+      console.warn(this.dataSource.filteredData.length);
+      this.data_length = this.dataSource.filteredData.length;
     });
   }
   delete(event: any, id: string) {

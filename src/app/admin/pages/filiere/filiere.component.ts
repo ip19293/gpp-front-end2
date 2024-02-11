@@ -15,7 +15,13 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
   styleUrls: ['./filiere.component.css'],
 })
 export class FiliereComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'description', 'niveau', 'action'];
+  displayedColumns: string[] = [
+    'name',
+    'description',
+    'niveau',
+    'status',
+    'action',
+  ];
   dataSource!: MatTableDataSource<any>;
   space = '    ';
   @ViewChild(MatPaginator) paginator!: MatPaginator;

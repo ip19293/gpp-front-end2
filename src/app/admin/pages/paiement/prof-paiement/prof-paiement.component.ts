@@ -96,14 +96,14 @@ export class ProfPaiementComponent implements OnInit {
         fin: result.toDate,
       };
       this.cours_service.getTotalCoursProf(this.id, dt).subscribe((res) => {
-        this.count = res.professeur.nbc;
-        this.heuresTV = res.professeur.nbh;
-        this.TH = res.professeur.th;
-        this.somme = res.professeur.somme;
-        this.facture = res.facture;
+        this.count = res.total[0].NBC;
+        this.heuresTV = res.total[0].NBH;
+        this.TH = res.total[0].TH;
+        this.somme = res.total[0].SOMME;
         this.cours = res.cours;
+        this.facture = res.total;
         this.dataSource = new MatTableDataSource(res.cours);
-        this.dataSrs = new MatTableDataSource(res.facture);
+        this.dataSrs = new MatTableDataSource(res.total);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
         console.warn(res.cours);
@@ -111,7 +111,6 @@ export class ProfPaiementComponent implements OnInit {
     });
   }
   ngOnInit(): void {
-    this.getProfDetail();
     this.getTotalCoursProf();
   }
   openChangePeriode(): void {
@@ -146,14 +145,14 @@ export class ProfPaiementComponent implements OnInit {
       this.cours_service
         .getTotalCoursProf(this.id, this.intervalForm.value)
         .subscribe((res) => {
-          this.count = res.professeur.nbc;
-          this.heuresTV = res.professeur.nbh;
-          this.TH = res.professeur.th;
-          this.somme = res.professeur.somme;
-          this.facture = res.facture;
+          this.count = res.total[0].NBC;
+          this.heuresTV = res.total[0].NBH;
+          this.TH = res.total[0].TH;
+          this.somme = res.total[0].SOMME;
           this.cours = res.cours;
+          this.facture = res.total;
           this.dataSource = new MatTableDataSource(res.cours);
-          this.dataSrs = new MatTableDataSource(res.facture);
+          this.dataSrs = new MatTableDataSource(res.total);
           this.dataSource.sort = this.sort;
           this.dataSource.paginator = this.paginator;
           console.warn(res.cours);
@@ -161,31 +160,25 @@ export class ProfPaiementComponent implements OnInit {
       this.changePeriode = false;
     }
   }
-  getProfDetail() {
-    this.prof_service.getProfesseur(this.id).subscribe((res) => {
-      this.prof = res.professeur;
-      this.nom = res.professeur.nom;
-      this.prenom = res.professeur.prenom;
-      this.email = res.professeur.email;
-      this.mobile = res.professeur.mobile;
-      console.log(this.prof);
-    });
-  }
 
   getTotalCoursProf() {
     this.cours_service
       .getTotalCoursProf(this.id, null)
       .subscribe((res: any) => {
-        this.fromDate = res.professeur.firstCours;
-        this.toDate = res.professeur.lastCours;
-        this.count = res.professeur.nbc;
-        this.heuresTV = res.professeur.nbh;
-        this.TH = res.professeur.th;
-        this.somme = res.professeur.somme;
+        this.nom = res.professeur.nom;
+        this.prenom = res.professeur.prenom;
+        this.email = res.professeur.email;
+        this.mobile = res.professeur.mobile;
+        this.fromDate = res.date.debit;
+        this.toDate = res.date.fin;
+        this.count = res.total[0].NBC;
+        this.heuresTV = res.total[0].NBH;
+        this.TH = res.total[0].TH;
+        this.somme = res.total[0].SOMME;
         this.cours = res.cours;
-        this.facture = res.facture;
+        this.facture = res.total;
         this.dataSource = new MatTableDataSource(res.cours);
-        this.dataSrs = new MatTableDataSource(res.facture);
+        this.dataSrs = new MatTableDataSource(res.total);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
       });

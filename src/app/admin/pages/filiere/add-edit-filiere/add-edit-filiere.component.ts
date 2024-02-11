@@ -64,6 +64,7 @@ export class AddEditFiliereComponent implements OnInit {
       name: ['', Validators.required],
       niveau: ['', Validators.required],
       description: ['', Validators.required],
+      isPaireSemestre: ['', Validators.required],
     });
     this.filliereForm.patchValue(this.data);
   }

@@ -32,7 +32,7 @@
         <mat-label>element</mat-label>
         <select matNativeControl name="element" formControlName="element">
           <option *ngFor="let element of elements" value="{{ element._id }}">
-            {{ element.filiere }} S{{ element.semestre }}
+            {{ element.name }} S{{ element.semestre }}
           </option>
         </select>
       </mat-form-field>
